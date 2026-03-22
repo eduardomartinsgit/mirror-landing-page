@@ -4,12 +4,18 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Checkbox } from "@/components/ui/checkbox"
 import { Spinner } from "@/components/ui/spinner"
-import { Check, Heart, ArrowRight, Shield, Users } from "lucide-react"
+import { Check, Heart, ArrowRight, Shield, Users, AlertCircle } from "lucide-react"
+import { PrivacyPolicyModal } from "@/components/privacy-policy-modal"
+import { supabase } from "@/lib/supabase"
 
 export function LeadForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [consentGiven, setConsentGiven] = useState(false)
+  const [privacyModalOpen, setPrivacyModalOpen] = useState(false)
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -18,13 +24,28 @@ export function LeadForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (!consentGiven) return
     setIsSubmitting(true)
+    setError(null)
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500))
+    try {
+      const { error: supabaseError } = await supabase
+        .from('leads')
+        .insert({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone || null,
+          consent_given: true,
+        })
 
-    setIsSubmitting(false)
-    setIsSubmitted(true)
+      if (supabaseError) throw supabaseError
+      setIsSubmitted(true)
+    } catch (err) {
+      console.error('Lead submission failed:', err)
+      setError('Ocorreu um erro ao submeter. Por favor, tenta novamente.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   if (isSubmitted) {
@@ -128,10 +149,38 @@ export function LeadForm() {
             />
           </div>
 
+          {/* Consent checkbox */}
+          <div className="flex items-start gap-3">
+            <Checkbox
+              id="consent"
+              checked={consentGiven}
+              onCheckedChange={(checked) => setConsentGiven(checked === true)}
+              className="mt-0.5 border-border/50 data-[state=checked]:bg-[#E91E8C] data-[state=checked]:border-[#E91E8C]"
+            />
+            <Label htmlFor="consent" className="text-sm text-muted-foreground leading-relaxed cursor-pointer">
+              Li e aceito a{" "}
+              <button
+                type="button"
+                onClick={() => setPrivacyModalOpen(true)}
+                className="text-[#00D4FF] underline underline-offset-2 hover:text-[#00D4FF]/80 transition-colors"
+              >
+                política de privacidade
+              </button>
+            </Label>
+          </div>
+
+          {/* Error message */}
+          {error && (
+            <div className="flex items-center gap-2 text-sm text-red-400 bg-red-400/10 rounded-xl px-4 py-3">
+              <AlertCircle className="w-4 h-4 flex-shrink-0" />
+              <span>{error}</span>
+            </div>
+          )}
+
           <Button
             type="submit"
-            disabled={isSubmitting}
-            className="w-full h-14 bg-gradient-to-r from-[#E91E8C] to-[#00D4FF] hover:opacity-90 transition-all duration-300 text-white font-bold rounded-xl text-base glow-magenta"
+            disabled={isSubmitting || !consentGiven}
+            className="w-full h-14 bg-gradient-to-r from-[#E91E8C] to-[#00D4FF] hover:opacity-90 transition-all duration-300 text-white font-bold rounded-xl text-base glow-magenta disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isSubmitting ? (
               <Spinner className="w-5 h-5" />
@@ -155,11 +204,9 @@ export function LeadForm() {
             <span>+500 interessados</span>
           </div>
         </div>
-
-        <p className="text-xs text-center text-muted-foreground mt-4">
-          Ao inscreveres-te, concordas com a nossa política de privacidade.
-        </p>
       </div>
+
+      <PrivacyPolicyModal open={privacyModalOpen} onOpenChange={setPrivacyModalOpen} />
     </div>
   )
 }
