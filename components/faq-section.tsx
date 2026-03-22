@@ -32,7 +32,7 @@ const faqs = [
   {
     question: "Quanto custa o Mirror?",
     answer:
-      "Tem um plano gratuito com 7 entradas por mês. O Essencial custa €5,99/mês ou €47,99/ano (poupas 33%). Sais quando quiseres. Pagamentos seguros via Stripe, com cartão ou SEPA.",
+      "Podes experimentar grátis com 3 entradas por mês. O Essencial custa €5,99/mês ou €47,99/ano (poupas 33%). O plano Plus a €9,99/mês inclui tudo e sem publicidade. Sais quando quiseres. Pagamentos seguros via Stripe, com cartão ou SEPA.",
   },
   {
     question: "Posso apagar os meus dados?",
