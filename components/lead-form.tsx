@@ -1,0 +1,165 @@
+"use client"
+
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Spinner } from "@/components/ui/spinner"
+import { Check, Heart, ArrowRight, Shield, Users } from "lucide-react"
+
+export function LeadForm() {
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+  })
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1500))
+
+    setIsSubmitting(false)
+    setIsSubmitted(true)
+  }
+
+  if (isSubmitted) {
+    return (
+      <div className="relative p-8 sm:p-10 rounded-3xl bg-card/40 backdrop-blur-2xl border border-border/30 overflow-hidden">
+        {/* Success background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#E91E8C]/10 via-[#7B2FBF]/5 to-[#00D4FF]/10" />
+        <div className="absolute top-0 right-0 w-40 h-40 bg-[#E91E8C]/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-40 h-40 bg-[#00D4FF]/20 rounded-full blur-3xl" />
+
+        <div className="relative text-center">
+          <div className="w-24 h-24 mx-auto mb-8 rounded-full bg-gradient-to-r from-[#E91E8C] to-[#00D4FF] flex items-center justify-center glow-magenta">
+            <Check className="w-12 h-12 text-white" />
+          </div>
+
+          <h3 className="text-2xl sm:text-3xl font-serif font-bold mb-4 gradient-text">
+            Bem-vindo à jornada!
+          </h3>
+
+          <p className="text-muted-foreground mb-8 leading-relaxed">
+            Obrigado por dares esse passo, <span className="text-foreground font-medium">{formData.name.split(' ')[0]}</span>!
+            Estás mais perto de uma vida emocional mais equilibrada. Entraremos em contacto em breve.
+          </p>
+
+          <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground bg-card/50 rounded-xl py-3 px-4">
+            <Heart className="w-4 h-4 text-[#E91E8C] animate-pulse" />
+            <span>Cuida de ti. Nós cuidamos do resto.</span>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="relative p-6 sm:p-8 rounded-3xl bg-card/40 backdrop-blur-2xl border border-border/30 overflow-hidden">
+      {/* Background effects */}
+      <div className="absolute inset-0 rounded-3xl overflow-hidden">
+        <div className="absolute -top-32 -right-32 w-64 h-64 bg-[#E91E8C]/15 rounded-full blur-3xl" />
+        <div className="absolute -bottom-32 -left-32 w-64 h-64 bg-[#00D4FF]/15 rounded-full blur-3xl" />
+      </div>
+
+      {/* Gradient border */}
+      <div className="absolute inset-0 rounded-3xl p-[1px] bg-gradient-to-br from-[#E91E8C]/40 via-transparent to-[#00D4FF]/40 pointer-events-none" />
+
+      <div className="relative">
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-[#E91E8C]/20 to-[#00D4FF]/20 mb-4">
+            <Heart className="w-7 h-7 text-[#E91E8C]" />
+          </div>
+
+          <h3 className="text-xl sm:text-2xl font-serif font-bold mb-2 text-foreground">
+            Começa a tua jornada
+          </h3>
+          <p className="text-sm text-muted-foreground">
+            Junta-te à lista de espera e sê um dos primeiros
+          </p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div className="space-y-2">
+            <Label htmlFor="name" className="text-sm font-medium text-foreground">
+              Nome completo
+            </Label>
+            <Input
+              id="name"
+              type="text"
+              placeholder="Como podemos chamar-te?"
+              required
+              value={formData.name}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              className="h-13 bg-background/60 border-border/50 focus:border-[#E91E8C] focus:ring-[#E91E8C]/30 rounded-xl placeholder:text-muted-foreground/50 text-base"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="email" className="text-sm font-medium text-foreground">
+              O teu melhor e-mail
+            </Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="email@exemplo.pt"
+              required
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              className="h-13 bg-background/60 border-border/50 focus:border-[#E91E8C] focus:ring-[#E91E8C]/30 rounded-xl placeholder:text-muted-foreground/50 text-base"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="phone" className="text-sm font-medium text-foreground">
+              Telemóvel <span className="text-muted-foreground font-normal">(opcional)</span>
+            </Label>
+            <Input
+              id="phone"
+              type="tel"
+              placeholder="+351 912 345 678"
+              value={formData.phone}
+              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              className="h-13 bg-background/60 border-border/50 focus:border-[#E91E8C] focus:ring-[#E91E8C]/30 rounded-xl placeholder:text-muted-foreground/50 text-base"
+            />
+          </div>
+
+          <Button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full h-14 bg-gradient-to-r from-[#E91E8C] to-[#00D4FF] hover:opacity-90 transition-all duration-300 text-white font-bold rounded-xl text-base glow-magenta"
+          >
+            {isSubmitting ? (
+              <Spinner className="w-5 h-5" />
+            ) : (
+              <>
+                Quero cuidar da minha mente
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </>
+            )}
+          </Button>
+        </form>
+
+        {/* Trust badges */}
+        <div className="flex items-center justify-center gap-6 mt-6 pt-6 border-t border-border/30">
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <Shield className="w-4 h-4 text-[#00D4FF]" />
+            <span>Dados protegidos (RGPD)</span>
+          </div>
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <Users className="w-4 h-4 text-[#E91E8C]" />
+            <span>+500 interessados</span>
+          </div>
+        </div>
+
+        <p className="text-xs text-center text-muted-foreground mt-4">
+          Ao inscreveres-te, concordas com a nossa política de privacidade.
+        </p>
+      </div>
+    </div>
+  )
+}
