@@ -1,7 +1,7 @@
 import { Header } from "@/components/header"
 import { HeroSection } from "@/components/hero-section"
-import { ProblemsSection } from "@/components/problems-section"
-import { HowItWorksSection } from "@/components/how-it-works-section"
+import { StatsSection } from "@/components/stats-section"
+import { FeaturesSection } from "@/components/features-section"
 import { PricingSection } from "@/components/pricing-section"
 import { FaqSection } from "@/components/faq-section"
 import { CtaSection } from "@/components/cta-section"
@@ -13,8 +13,10 @@ export default function Home() {
       <Header />
       <main>
         <HeroSection />
-        <ProblemsSection />
-        <HowItWorksSection />
+        <StatsSection />
+        <div id="funcionalidades">
+          <FeaturesSection />
+        </div>
         <PricingSection />
         <FaqSection />
         <CtaSection />

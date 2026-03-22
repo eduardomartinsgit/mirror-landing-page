@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import { Shield, Heart, Brain, Sparkles } from "lucide-react"
 import { LeadForm } from "@/components/lead-form"
+import { ScrollReveal } from "@/components/scroll-reveal"
 
 const typingTexts = [
   "a tua mente",
@@ -43,16 +44,11 @@ export function HeroSection() {
     <section className="relative min-h-screen pt-20 md:pt-24 pb-16 overflow-hidden flex items-center">
       {/* Animated Neural Network Background */}
       <div className="absolute inset-0 overflow-hidden">
-        {/* Central brain-like glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#7B2FBF]/10 rounded-full blur-[200px]" />
-
-        {/* Floating orbs representing neurons */}
         <div className="absolute top-1/4 -left-20 w-80 h-80 bg-[#E91E8C]/25 rounded-full blur-[100px] animate-pulse" />
         <div className="absolute top-1/3 -right-20 w-96 h-96 bg-[#00D4FF]/25 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '1s' }} />
         <div className="absolute bottom-1/4 left-1/4 w-64 h-64 bg-[#7B2FBF]/20 rounded-full blur-[80px] animate-pulse" style={{ animationDelay: '2s' }} />
-        <div className="absolute bottom-1/3 right-1/4 w-48 h-48 bg-[#E91E8C]/15 rounded-full blur-[60px] animate-pulse" style={{ animationDelay: '0.5s' }} />
 
-        {/* Neural connection lines */}
         <svg className="absolute inset-0 w-full h-full opacity-[0.04]" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <linearGradient id="neuralGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -68,25 +64,12 @@ export function HeroSection() {
           </pattern>
           <rect width="100%" height="100%" fill="url(#neural)" />
         </svg>
-
-        {/* Heartbeat line animation */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 overflow-hidden opacity-10">
-          <svg className="w-full h-full" viewBox="0 0 1200 100" preserveAspectRatio="none">
-            <path
-              d="M0,50 L200,50 L250,20 L300,80 L350,35 L400,65 L450,50 L600,50 L650,15 L700,85 L750,30 L800,70 L850,50 L1200,50"
-              fill="none"
-              stroke="url(#neuralGrad)"
-              strokeWidth="2"
-              className="animate-pulse"
-            />
-          </svg>
-        </div>
       </div>
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
           {/* Text Content */}
-          <div className="flex-1 text-center lg:text-left">
+          <ScrollReveal animation="fade-right" className="flex-1 text-center lg:text-left">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-[#E91E8C]/15 to-[#00D4FF]/15 border border-[#E91E8C]/30 text-sm font-medium mb-8 backdrop-blur-sm">
               <Heart className="h-4 w-4 text-[#E91E8C] animate-pulse" />
               <span className="gradient-text font-semibold">Cuida da tua saúde mental</span>
@@ -141,12 +124,14 @@ export function HeroSection() {
                 </div>
               </div>
             </div>
-          </div>
+          </ScrollReveal>
 
           {/* Lead Form Card */}
-          <div className="flex-1 w-full max-w-md lg:max-w-lg" id="lead-form">
-            <LeadForm />
-          </div>
+          <ScrollReveal animation="fade-left" delay={200} className="flex-1 w-full max-w-md lg:max-w-lg">
+            <div id="lead-form">
+              <LeadForm />
+            </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>

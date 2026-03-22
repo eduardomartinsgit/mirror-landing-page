@@ -1,10 +1,10 @@
-import Image from "next/image"
 import Link from "next/link"
 import { Instagram, Twitter, Linkedin, Mail } from "lucide-react"
+import { Logo } from "@/components/logo"
 
 const footerLinks = {
   produto: [
-    { label: "Como funciona", href: "#como-funciona" },
+    { label: "Funcionalidades", href: "#funcionalidades" },
     { label: "Planos", href: "#precos" },
     { label: "FAQ", href: "#faq" },
   ],
@@ -37,14 +37,8 @@ export function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12 mb-12">
           {/* Brand */}
           <div className="sm:col-span-2">
-            <Link href="/" className="inline-block mb-4 glitch">
-              <Image
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/mirror_logo_transparent-Pa1mAnjxAsKsp8R9bgVo2KVGZvVwrD.png"
-                alt="Mirror"
-                width={140}
-                height={42}
-                className="h-10 w-auto"
-              />
+            <Link href="/" className="inline-block mb-4">
+              <Logo />
             </Link>
             <p className="text-muted-foreground max-w-xs mb-6 leading-relaxed">
               O teu companheiro diário para autoconhecimento e bem-estar emocional,

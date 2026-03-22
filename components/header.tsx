@@ -1,14 +1,14 @@
 "use client"
 
-import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
-import { Menu, X } from "lucide-react"
+import { Menu } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet"
+import { Logo } from "@/components/logo"
 
 const navLinks = [
-  { href: "#como-funciona", label: "Como funciona" },
+  { href: "#funcionalidades", label: "Funcionalidades" },
   { href: "#precos", label: "Planos" },
   { href: "#faq", label: "FAQ" },
 ]
@@ -29,15 +29,8 @@ export function Header() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 md:h-20 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 glitch">
-            <Image
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/mirror_logo_transparent-Pa1mAnjxAsKsp8R9bgVo2KVGZvVwrD.png"
-              alt="Mirror"
-              width={160}
-              height={48}
-              className="h-10 md:h-12 w-auto"
-              priority
-            />
+          <Link href="/" className="flex items-center">
+            <Logo />
           </Link>
 
           {/* Desktop Navigation */}
