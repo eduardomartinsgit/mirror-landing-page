@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useCallback } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -16,15 +16,47 @@ export function LeadForm() {
   const [error, setError] = useState<string | null>(null)
   const [consentGiven, setConsentGiven] = useState(false)
   const [privacyModalOpen, setPrivacyModalOpen] = useState(false)
+  const [errors, setErrors] = useState<{ email?: string; phone?: string }>({})
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
   })
 
+  const validateEmail = useCallback((email: string): string | undefined => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!email || !emailRegex.test(email)) {
+      return "Por favor, introduz um endereço de e-mail válido."
+    }
+    return undefined
+  }, [])
+
+  const validatePhone = useCallback((phone: string): string | undefined => {
+    if (!phone.trim()) return undefined // phone is optional
+    const stripped = phone.replace(/[\s\-]/g, "")
+    const ptPhoneRegex = /^(?:\+?351)?[92]\d{8}$/
+    if (!ptPhoneRegex.test(stripped)) {
+      return "Por favor, introduz um número de telefone português válido (ex: +351 912 345 678)."
+    }
+    return undefined
+  }, [])
+
+  const handleBlur = useCallback((field: "email" | "phone") => {
+    const value = formData[field]
+    const validationError = field === "email" ? validateEmail(value) : validatePhone(value)
+    setErrors((prev) => ({ ...prev, [field]: validationError }))
+  }, [formData, validateEmail, validatePhone])
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!consentGiven) return
+
+    const emailError = validateEmail(formData.email)
+    const phoneError = validatePhone(formData.phone)
+    const newErrors = { email: emailError, phone: phoneError }
+    setErrors(newErrors)
+    if (emailError || phoneError) return
+
     setIsSubmitting(true)
     setError(null)
 
@@ -131,8 +163,12 @@ export function LeadForm() {
               required
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              onBlur={() => handleBlur("email")}
               className="h-13 bg-background/60 border-border/50 focus:border-[#E91E8C] focus:ring-[#E91E8C]/30 rounded-xl placeholder:text-muted-foreground/50 text-base"
             />
+            {errors.email && (
+              <p className="text-sm text-red-400">{errors.email}</p>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -145,8 +181,12 @@ export function LeadForm() {
               placeholder="+351 912 345 678"
               value={formData.phone}
               onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              onBlur={() => handleBlur("phone")}
               className="h-13 bg-background/60 border-border/50 focus:border-[#E91E8C] focus:ring-[#E91E8C]/30 rounded-xl placeholder:text-muted-foreground/50 text-base"
             />
+            {errors.phone && (
+              <p className="text-sm text-red-400">{errors.phone}</p>
+            )}
           </div>
 
           {/* Consent checkbox */}

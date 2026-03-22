@@ -2,12 +2,29 @@
 
 import { ScrollReveal } from "@/components/scroll-reveal"
 import { PhoneMockup } from "@/components/phone-mockup"
+import { useScrollProgress } from "@/hooks/use-scroll-progress"
 
 /* ─── helpers ─── */
 
-function Badge({ children }: { children: React.ReactNode }) {
+function getFeatureOpacity(progress: number, featureIndex: number): number {
+  const segmentSize = 0.25
+  const start = featureIndex * segmentSize
+  const end = start + segmentSize
+  const fadeRange = 0.05 // 5% of total scroll for transition
+
+  if (progress >= start + fadeRange && progress <= end - fadeRange) return 1
+  if (progress < start) return 0
+  if (progress > end) return 0
+  if (progress < start + fadeRange) return (progress - start) / fadeRange
+  return (end - progress) / fadeRange
+}
+
+function Badge({ children, accent }: { children: React.ReactNode; accent: string }) {
   return (
-    <span className="inline-block mb-4 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest rounded-full bg-white/5 border border-white/10 text-[#00D4FF]">
+    <span
+      className="inline-block mb-4 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest rounded-full bg-white/5 border border-white/10"
+      style={{ color: accent }}
+    >
       {children}
     </span>
   )
@@ -446,7 +463,7 @@ const features: Feature[] = [
     badge: "Gamificação",
     title: "O teu bem-estar, num número.",
     description:
-      "Um score de 0 a 100 calculado com base nas tuas entradas, sentimentos e consistência. Simples, gamificado e comparável ao longo do tempo. 'O meu Mirror Score hoje é 78 🌊'",
+      "Um score de 0 a 100 calculado com base nas tuas entradas, sentimentos e consistência. Simples, gamificado e comparável ao longo do tempo.",
     screen: <MirrorScoreScreen />,
     accent: "#00D4FF",
   },
@@ -460,81 +477,133 @@ const features: Feature[] = [
   },
 ]
 
-/* ─── background effects ─── */
+/* ─── progress dots ─── */
 
-function FeatureBackground({ index, accent }: { index: number; accent: string }) {
-  const positions = [
-    "top-1/4 -right-40",
-    "top-1/3 -left-40",
-    "bottom-1/4 -right-40",
-    "top-1/4 -left-40",
-  ]
+function ProgressDots({ activeIndex }: { activeIndex: number }) {
   return (
-    <>
-      <div
-        className={`absolute ${positions[index]} w-80 h-80 rounded-full blur-[120px] opacity-20 pointer-events-none`}
-        style={{ backgroundColor: accent }}
-      />
-      <div
-        className={`absolute ${index % 2 === 0 ? "bottom-20 left-20" : "top-20 right-20"} w-60 h-60 rounded-full blur-[100px] opacity-10 pointer-events-none`}
-        style={{ backgroundColor: index % 2 === 0 ? "#7B2FBF" : "#00D4FF" }}
-      />
-    </>
+    <div className="flex lg:flex-col gap-3 items-center mb-6 lg:mb-0 lg:mr-8">
+      {features.map((_, i) => (
+        <div
+          key={i}
+          className="w-2.5 h-2.5 rounded-full transition-all duration-500"
+          style={{
+            background:
+              i === activeIndex
+                ? "linear-gradient(135deg, #E91E8C, #7B2FBF, #00D4FF)"
+                : "rgba(255,255,255,0.15)",
+            transform: i === activeIndex ? "scale(1.4)" : "scale(1)",
+            boxShadow:
+              i === activeIndex
+                ? "0 0 12px rgba(233, 30, 140, 0.4)"
+                : "none",
+          }}
+        />
+      ))}
+    </div>
   )
 }
 
 /* ─── main export ─── */
 
 export function FeaturesSection() {
+  const { containerRef, progress } = useScrollProgress()
+
+  // Determine active feature index
+  const activeIndex = Math.min(3, Math.floor(progress * 4))
+
   return (
-    <>
-      {features.map((feature, i) => {
-        const isReversed = i % 2 !== 0
+    <section ref={containerRef} className="relative" style={{ height: "400vh" }}>
+      {/* Section heading */}
+      <div className="relative z-10 pt-20 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
+        <ScrollReveal animation="fade-up">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
+            <span className="text-white">Conhece o </span>
+            <span className="bg-gradient-to-r from-[#E91E8C] via-[#7B2FBF] to-[#00D4FF] bg-clip-text text-transparent">
+              Mirror
+            </span>
+          </h2>
+          <p className="text-base sm:text-lg text-white/50 max-w-xl mx-auto">
+            Navega pelas funcionalidades do MVP enquanto fazes scroll.
+          </p>
+        </ScrollReveal>
+      </div>
 
-        return (
-          <section
-            key={i}
-            className="min-h-screen flex items-center py-20 relative overflow-hidden"
-          >
-            <FeatureBackground index={i} accent={feature.accent} />
+      {/* Sticky container */}
+      <div className="sticky top-0 h-screen flex items-center overflow-hidden">
+        {/* Background glow based on active feature */}
+        <div
+          className="absolute inset-0 pointer-events-none transition-opacity duration-700"
+          style={{ opacity: 0.15 }}
+        >
+          <div
+            className="absolute top-1/4 -right-40 w-80 h-80 rounded-full blur-[120px] transition-colors duration-700"
+            style={{ backgroundColor: features[activeIndex].accent }}
+          />
+          <div
+            className="absolute bottom-1/4 -left-40 w-60 h-60 rounded-full blur-[100px] transition-colors duration-700"
+            style={{ backgroundColor: features[activeIndex === 0 ? 2 : activeIndex - 1]?.accent || "#7B2FBF" }}
+          />
+        </div>
 
-            <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
-              <div
-                className={`flex flex-col items-center gap-12 lg:gap-20 ${
-                  isReversed ? "lg:flex-row-reverse" : "lg:flex-row"
-                }`}
-              >
-                {/* Text side */}
-                <ScrollReveal
-                  animation={isReversed ? "fade-left" : "fade-right"}
-                  className="flex-1 max-w-xl"
-                >
-                  <Badge>{feature.badge}</Badge>
-                  <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight tracking-tight mb-6">
-                    <span className="bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
-                      {feature.title}
-                    </span>
-                  </h2>
-                  <p className="text-base sm:text-lg text-white/60 leading-relaxed">
-                    {feature.description}
-                  </p>
-                </ScrollReveal>
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
+          <div className="flex flex-col-reverse lg:flex-row items-center gap-8 lg:gap-16">
+            {/* Left side: progress dots + text */}
+            <div className="flex-1 flex flex-col lg:flex-row items-center lg:items-start">
+              <ProgressDots activeIndex={activeIndex} />
 
-                {/* Phone side */}
-                <ScrollReveal
-                  animation={isReversed ? "fade-right" : "fade-left"}
-                  delay={200}
-                  className="flex-1 flex justify-center"
-                >
-                  <PhoneMockup>
-                    {feature.screen}
-                  </PhoneMockup>
-                </ScrollReveal>
+              {/* Stacked text layers */}
+              <div className="relative w-full max-w-xl min-h-[280px]">
+                {features.map((feature, i) => {
+                  const opacity = getFeatureOpacity(progress, i)
+                  return (
+                    <div
+                      key={i}
+                      className="absolute inset-0 flex flex-col justify-center transition-opacity duration-100 text-center lg:text-left"
+                      style={{
+                        opacity,
+                        pointerEvents: opacity > 0.5 ? "auto" : "none",
+                      }}
+                    >
+                      <Badge accent={feature.accent}>{feature.badge}</Badge>
+                      <h3 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight tracking-tight mb-4 lg:mb-6">
+                        <span className="bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
+                          {feature.title}
+                        </span>
+                      </h3>
+                      <p className="text-sm sm:text-base lg:text-lg text-white/60 leading-relaxed">
+                        {feature.description}
+                      </p>
+                    </div>
+                  )
+                })}
               </div>
             </div>
-          </section>
-        )
-      })}
-    </>
+
+            {/* Right side: phone mockup with cross-fading screens */}
+            <div className="flex-1 flex justify-center">
+              <PhoneMockup>
+                <div className="relative w-full h-full">
+                  {features.map((feature, i) => {
+                    const opacity = getFeatureOpacity(progress, i)
+                    return (
+                      <div
+                        key={i}
+                        className="absolute inset-0 transition-opacity duration-100"
+                        style={{
+                          opacity,
+                          pointerEvents: opacity > 0.5 ? "auto" : "none",
+                        }}
+                      >
+                        {feature.screen}
+                      </div>
+                    )
+                  })}
+                </div>
+              </PhoneMockup>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   )
 }
