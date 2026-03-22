@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter, Space_Grotesk, JetBrains_Mono } from 'next/font/google'
-import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
 const inter = Inter({
@@ -27,7 +26,6 @@ export const metadata: Metadata = {
     statusBarStyle: 'black-translucent',
     title: 'Mirror',
   },
-  generator: 'v0.app',
 }
 
 export const viewport: Viewport = {
@@ -47,7 +45,6 @@ export default function RootLayout({
     <html lang="pt-PT">
       <body className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans antialiased`}>
         {children}
-        <Analytics />
       </body>
     </html>
   )
