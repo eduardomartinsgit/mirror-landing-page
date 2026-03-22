@@ -42,10 +42,10 @@ export function GeoBlock({ onClose }: GeoBlockProps) {
         {/* Portuguese message */}
         <div className="space-y-3">
           <h1 className="text-2xl sm:text-3xl font-serif font-bold bg-gradient-to-r from-[#E91E8C] to-[#00D4FF] bg-clip-text text-transparent">
-            O Mirror ainda não está disponível no teu país.
+            O Mirror ainda não chegou ao teu país.
           </h1>
           <p className="text-base text-gray-300 leading-relaxed">
-            Estamos a trabalhar para chegar a mais lugares em breve. Deixa o teu e-mail e avisamos-te quando estivermos disponíveis na tua região.
+            Estamos a trabalhar nisso. Deixa o teu e-mail e avisamos-te quando chegarmos aí.
           </p>
         </div>
 
@@ -55,7 +55,7 @@ export function GeoBlock({ onClose }: GeoBlockProps) {
             Mirror is not yet available in your country.
           </h2>
           <p className="text-sm text-gray-400 leading-relaxed">
-            We&apos;re working to reach more places soon. Leave your email and we&apos;ll let you know when we&apos;re available in your region.
+            We&apos;re working on it. Drop your email and we&apos;ll let you know when we launch in your area.
           </p>
         </div>
 
@@ -74,7 +74,7 @@ export function GeoBlock({ onClose }: GeoBlockProps) {
               type="submit"
               className="h-12 px-6 rounded-xl bg-gradient-to-r from-[#E91E8C] to-[#00D4FF] text-white font-bold text-sm hover:opacity-90 transition-opacity shrink-0"
             >
-              Notificar-me
+              Avisar-me
             </button>
           </form>
         ) : (

@@ -35,9 +35,9 @@ function Badge({ children, accent }: { children: React.ReactNode; accent: string
 function VoiceDiaryScreen() {
   const barHeights = [18, 32, 24, 40, 28, 36, 20, 44, 30, 22, 38, 26, 42, 16, 34, 28, 46, 20, 36, 30, 24, 40, 18, 32, 44, 22, 38, 34, 26, 42]
   return (
-    <div className="flex flex-col h-full gap-3 text-white" role="img" aria-label="Simulação do ecrã do Mirror">
+    <div className="flex flex-col h-full gap-2 text-white overflow-hidden" role="img" aria-label="Simulação do ecrã do Mirror">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between shrink-0">
         <div>
           <p className="text-sm font-semibold">Diário de Voz</p>
           <p className="text-xs text-white/60">Terça, 18 Mar 2026</p>
@@ -50,8 +50,8 @@ function VoiceDiaryScreen() {
       </div>
 
       {/* Waveform */}
-      <div className="flex-1 flex flex-col items-center justify-center gap-4">
-        <svg viewBox="0 0 240 60" className="w-full h-14" aria-hidden="true">
+      <div className="flex-1 flex flex-col items-center justify-center gap-2 min-h-0">
+        <svg viewBox="0 0 240 60" className="w-full shrink" aria-hidden="true">
           <defs>
             <linearGradient id="waveGrad" x1="0" y1="0" x2="1" y2="0">
               <stop offset="0%" stopColor="#E91E8C" />
@@ -74,19 +74,19 @@ function VoiceDiaryScreen() {
         </svg>
 
         {/* Timer */}
-        <p className="text-2xl font-mono font-bold tracking-wider bg-gradient-to-r from-[#E91E8C] to-[#00D4FF] bg-clip-text text-transparent">
+        <p className="text-xl font-mono font-bold tracking-wider bg-gradient-to-r from-[#E91E8C] to-[#00D4FF] bg-clip-text text-transparent shrink-0">
           2:34
         </p>
 
         {/* Recording button */}
-        <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#E91E8C] to-[#7B2FBF] flex items-center justify-center shadow-lg shadow-[#E91E8C]/30">
-          <div className="w-5 h-5 rounded-sm bg-white" />
+        <div className="w-11 h-11 rounded-full bg-gradient-to-br from-[#E91E8C] to-[#7B2FBF] flex items-center justify-center shadow-lg shadow-[#E91E8C]/30 shrink-0">
+          <div className="w-4 h-4 rounded-sm bg-white" />
         </div>
       </div>
 
       {/* Emotions detected */}
-      <div>
-        <p className="text-xs text-white/60 mb-1.5">Emoções detectadas</p>
+      <div className="shrink-0">
+        <p className="text-[10px] text-white/60 mb-1">Emoções detectadas</p>
         <div className="flex gap-1.5 flex-wrap">
           {[
             { label: "Ansiedade", color: "#E91E8C" },
@@ -217,23 +217,22 @@ function EmotionalTimelineScreen() {
 }
 
 function MirrorScoreScreen() {
-  const circumference = 2 * Math.PI * 52
+  const circumference = 2 * Math.PI * 45
   const progress = (78 / 100) * circumference
-
   const weekBars = [60, 72, 68, 74, 70, 75, 78]
   const barDays = ["S", "T", "Q", "Q", "S", "S", "D"]
 
   return (
-    <div className="flex flex-col h-full gap-3 text-white items-center" role="img" aria-label="Simulação do ecrã do Mirror">
+    <div className="flex flex-col h-full gap-2 text-white" role="img" aria-label="Simulação do ecrã do Mirror">
       {/* Header */}
-      <div className="w-full">
+      <div className="w-full shrink-0">
         <p className="text-sm font-semibold text-center">Mirror Score&trade;</p>
         <p className="text-xs text-white/60 text-center">O teu índice de bem-estar</p>
       </div>
 
       {/* Gauge */}
-      <div className="relative flex items-center justify-center py-2">
-        <svg width="140" height="140" viewBox="0 0 120 120" aria-hidden="true">
+      <div className="relative flex items-center justify-center shrink-0 mx-auto" style={{ width: 120, height: 120 }}>
+        <svg viewBox="0 0 100 100" className="w-full h-full" aria-hidden="true">
           <defs>
             <linearGradient id="gaugeGrad" x1="0" y1="0" x2="1" y2="1">
               <stop offset="0%" stopColor="#E91E8C" />
@@ -241,75 +240,50 @@ function MirrorScoreScreen() {
               <stop offset="100%" stopColor="#00D4FF" />
             </linearGradient>
           </defs>
-          {/* Background ring */}
-          <circle cx="60" cy="60" r="52" fill="none" stroke="white" strokeOpacity="0.05" strokeWidth="8" />
-          {/* Progress ring */}
-          <circle
-            cx="60"
-            cy="60"
-            r="52"
-            fill="none"
-            stroke="url(#gaugeGrad)"
-            strokeWidth="8"
-            strokeLinecap="round"
-            strokeDasharray={`${progress} ${circumference}`}
-            transform="rotate(-90 60 60)"
-          />
+          <circle cx="50" cy="50" r="45" fill="none" stroke="white" strokeOpacity="0.05" strokeWidth="7" />
+          <circle cx="50" cy="50" r="45" fill="none" stroke="url(#gaugeGrad)" strokeWidth="7" strokeLinecap="round" strokeDasharray={`${progress} ${circumference}`} transform="rotate(-90 50 50)" />
         </svg>
         <div className="absolute flex flex-col items-center">
-          <span className="text-4xl font-bold bg-gradient-to-br from-[#E91E8C] via-[#7B2FBF] to-[#00D4FF] bg-clip-text text-transparent">
-            78
-          </span>
-          <span className="text-[11px] text-white/60 -mt-0.5">de 100</span>
+          <span className="text-3xl font-bold bg-gradient-to-br from-[#E91E8C] via-[#7B2FBF] to-[#00D4FF] bg-clip-text text-transparent">78</span>
+          <span className="text-[10px] text-white/60 -mt-0.5">de 100</span>
         </div>
       </div>
 
       {/* Trend */}
-      <div className="flex items-center gap-4 justify-center">
+      <div className="flex items-center gap-3 justify-center shrink-0">
         <div className="flex items-center gap-1 text-[#00D4FF]">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden="true">
-            <path d="M18 15l-6-6-6 6" />
-          </svg>
-          <span className="text-xs font-semibold">+5 esta semana</span>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" aria-hidden="true"><path d="M18 15l-6-6-6 6" /></svg>
+          <span className="text-[11px] font-semibold">+5 esta semana</span>
         </div>
         <div className="flex items-center gap-1">
-          <span className="text-sm">🔥</span>
-          <span className="text-xs font-medium text-white/70">12 dias seguidos</span>
+          <span className="text-xs">🔥</span>
+          <span className="text-[11px] font-medium text-white/70">12 dias seguidos</span>
         </div>
       </div>
 
       {/* Weekly bars */}
-      <div className="w-full px-2">
-        <p className="text-xs text-white/60 mb-2">Últimos 7 dias</p>
-        <div className="flex items-end justify-between gap-1.5 h-16">
+      <div className="w-full flex-1 min-h-0 flex flex-col justify-center">
+        <p className="text-[10px] text-white/60 mb-1">Últimos 7 dias</p>
+        <div className="flex items-end justify-between gap-1 h-12">
           {weekBars.map((v, i) => (
-            <div key={i} className="flex-1 flex flex-col items-center gap-1">
-              <div className="w-full rounded-t-sm relative" style={{ height: `${(v / 100) * 56}px` }}>
-                <div
-                  className="absolute inset-0 rounded-t-sm"
-                  style={{
-                    background: i === 6
-                      ? "linear-gradient(to top, #E91E8C, #00D4FF)"
-                      : "rgba(255,255,255,0.08)",
-                  }}
-                />
-              </div>
-              <span className="text-[11px] text-white/60">{barDays[i]}</span>
+            <div key={i} className="flex-1 flex flex-col items-center gap-0.5">
+              <div className="w-full rounded-t-sm" style={{ height: `${(v / 100) * 40}px`, background: i === 6 ? "linear-gradient(to top, #E91E8C, #00D4FF)" : "rgba(255,255,255,0.08)" }} />
+              <span className="text-[9px] text-white/50">{barDays[i]}</span>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Stats row */}
-      <div className="w-full flex gap-2">
+      {/* Stats */}
+      <div className="w-full flex gap-1.5 shrink-0">
         {[
-          { label: "Média mensal", value: "72", color: "#7B2FBF" },
+          { label: "Média", value: "72", color: "#7B2FBF" },
           { label: "Recorde", value: "85", color: "#00D4FF" },
-          { label: "Consistência", value: "94%", color: "#E91E8C" },
+          { label: "Consist.", value: "94%", color: "#E91E8C" },
         ].map((s) => (
-          <div key={s.label} className="flex-1 rounded-lg bg-white/5 p-2 text-center">
-            <p className="text-[11px] text-white/60">{s.label}</p>
-            <p className="text-xs font-bold" style={{ color: s.color }}>{s.value}</p>
+          <div key={s.label} className="flex-1 rounded-lg bg-white/5 p-1.5 text-center">
+            <p className="text-[9px] text-white/60">{s.label}</p>
+            <p className="text-[11px] font-bold" style={{ color: s.color }}>{s.value}</p>
           </div>
         ))}
       </div>
@@ -347,14 +321,14 @@ function EmergencyModeScreen() {
             />
             {/* Breathing ring */}
             <div
-              className="w-32 h-32 rounded-full border-2 border-[#7B2FBF]/60 flex items-center justify-center"
+              className="w-28 h-28 rounded-full border-2 border-[#7B2FBF]/60 flex items-center justify-center"
               style={{
                 background: "radial-gradient(circle at center, #7B2FBF20 0%, transparent 70%)",
                 animation: "breathe 8s ease-in-out infinite",
               }}
             >
               <div
-                className="w-24 h-24 rounded-full border border-[#E91E8C]/30 flex items-center justify-center"
+                className="w-20 h-20 rounded-full border border-[#E91E8C]/30 flex items-center justify-center"
                 style={{
                   background: "radial-gradient(circle at center, #E91E8C15 0%, transparent 70%)",
                   animation: "breathe 8s ease-in-out infinite 0.3s",
@@ -444,34 +418,34 @@ interface Feature {
 
 const features: Feature[] = [
   {
-    badge: "Feature principal",
-    title: "Fala. A IA ouve, compreende e reflete.",
+    badge: "O essencial",
+    title: "Fala. O Mirror ouve.",
     description:
-      "Fala 2 a 5 minutos por dia. O Mirror transcreve, detecta emoções e padrões, e devolve-te insights personalizados. É o espelho que dá nome à app.",
+      "Gravas a tua voz, a IA percebe o que sentes e devolve-te reflexões úteis.",
     screen: <VoiceDiaryScreen />,
     accent: "#E91E8C",
   },
   {
-    badge: "Visualização",
-    title: "Vê os teus padrões. Compreende-te melhor.",
+    badge: "Os teus padrões",
+    title: "Vê como te sentes ao longo do tempo.",
     description:
-      "Um mapa visual das tuas emoções ao longo do tempo. Identifica padrões como 'às terças estás mais ansioso' ou 'depois de exercício o humor melhora 40%.'",
+      "As tuas emoções num gráfico. Vê padrões que não notavas.",
     screen: <EmotionalTimelineScreen />,
     accent: "#7B2FBF",
   },
   {
-    badge: "Gamificação",
+    badge: "O teu score",
     title: "O teu bem-estar, num número.",
     description:
-      "Um score de 0 a 100 calculado com base nas tuas entradas, sentimentos e consistência. Simples, gamificado e comparável ao longo do tempo.",
+      "De 0 a 100, vê como estás e acompanha a tua evolução.",
     screen: <MirrorScoreScreen />,
     accent: "#00D4FF",
   },
   {
-    badge: "Suporte 24/7",
-    title: "Nos momentos difíceis, estamos aqui.",
+    badge: "Para os dias difíceis",
+    title: "Quando precisas, estamos cá.",
     description:
-      "Um botão de acesso rápido para momentos de crise. Conversa guiada com técnicas de grounding — respiração 4-7-8, exercício sensorial 5-4-3-2-1. Empática, nunca clínica.",
+      "Exercícios de respiração e técnicas para acalmar. Sem julgamento.",
     screen: <EmergencyModeScreen />,
     accent: "#E91E8C",
   },
@@ -481,20 +455,21 @@ const features: Feature[] = [
 
 function ProgressDots({ activeIndex }: { activeIndex: number }) {
   return (
-    <div className="flex lg:flex-col gap-3 items-center mb-6 lg:mb-0 lg:mr-8" role="tablist" aria-label="Funcionalidades do Mirror">
+    <div className="flex gap-2.5 items-center justify-center lg:flex-col lg:gap-3 lg:mr-8" role="tablist" aria-label="Funcionalidades do Mirror">
       {features.map((feature, i) => (
-        <div
+        <button
           key={i}
           role="tab"
           aria-selected={i === activeIndex}
           aria-label={feature.badge}
-          className="w-2.5 h-2.5 rounded-full transition-all duration-500"
+          tabIndex={-1}
+          className="w-2.5 h-2.5 rounded-full transition-all duration-500 cursor-default"
           style={{
             background:
               i === activeIndex
                 ? "linear-gradient(135deg, #E91E8C, #7B2FBF, #00D4FF)"
                 : "rgba(255,255,255,0.15)",
-            transform: i === activeIndex ? "scale(1.4)" : "scale(1)",
+            transform: i === activeIndex ? "scale(1.5)" : "scale(1)",
             boxShadow:
               i === activeIndex
                 ? "0 0 12px rgba(233, 30, 140, 0.4)"
@@ -506,131 +481,95 @@ function ProgressDots({ activeIndex }: { activeIndex: number }) {
   )
 }
 
-/* ─── mobile feature card ─── */
-
-function MobileFeatureCard({ feature, index }: { feature: Feature; index: number }) {
-  return (
-    <ScrollReveal animation="fade-up" delay={index * 100}>
-      <div className="relative rounded-3xl bg-card/40 backdrop-blur-sm border border-border/30 p-6 overflow-hidden">
-        {/* Background glow */}
-        <div
-          className="absolute -top-20 -right-20 w-40 h-40 rounded-full blur-[80px] opacity-20 pointer-events-none"
-          style={{ backgroundColor: feature.accent }}
-        />
-
-        <div className="relative">
-          <Badge accent={feature.accent}>{feature.badge}</Badge>
-
-          <h3 className="text-xl font-bold leading-tight tracking-tight mb-3">
-            <span className="bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
-              {feature.title}
-            </span>
-          </h3>
-
-          <p className="text-sm text-white/70 leading-relaxed mb-6">
-            {feature.description}
-          </p>
-
-          {/* Phone mockup centered */}
-          <div className="flex justify-center">
-            <PhoneMockup className="max-w-[180px]">
-              {feature.screen}
-            </PhoneMockup>
-          </div>
-        </div>
-      </div>
-    </ScrollReveal>
-  )
-}
-
 /* ─── main export ─── */
 
 export function FeaturesSection() {
   const { containerRef, progress } = useScrollProgress()
-
-  // Determine active feature index
   const activeIndex = Math.min(3, Math.floor(progress * 4))
 
   return (
-    <>
-      {/* Section heading */}
-      <div className="pt-20 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
-        <ScrollReveal animation="fade-up">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
+    <section ref={containerRef} className="relative" style={{ height: "400svh" }}>
+      {/* Sticky container — full viewport, all devices */}
+      <div className="sticky top-0 h-[100svh] flex flex-col overflow-hidden">
+        {/* Background glow */}
+        <div className="absolute inset-0 pointer-events-none" style={{ opacity: 0.15 }}>
+          <div
+            className="absolute top-1/4 -right-20 lg:-right-40 w-60 lg:w-80 h-60 lg:h-80 rounded-full blur-[100px] lg:blur-[120px] transition-colors duration-700"
+            style={{ backgroundColor: features[activeIndex].accent }}
+          />
+          <div
+            className="absolute bottom-1/4 -left-20 lg:-left-40 w-48 lg:w-60 h-48 lg:h-60 rounded-full blur-[80px] lg:blur-[100px] transition-colors duration-700"
+            style={{ backgroundColor: features[activeIndex === 0 ? 2 : activeIndex - 1]?.accent || "#7B2FBF" }}
+          />
+        </div>
+
+        {/* Header area */}
+        <div className="relative shrink-0 pt-20 lg:pt-24 pb-2 lg:pb-4 px-5 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-xl sm:text-2xl lg:text-4xl font-bold tracking-tight mb-3">
             <span className="text-white">Conhece o </span>
             <span className="bg-gradient-to-r from-[#E91E8C] via-[#7B2FBF] to-[#00D4FF] bg-clip-text text-transparent">
               Mirror
             </span>
           </h2>
-          <p className="text-base sm:text-lg text-white/70 max-w-xl mx-auto">
-            Descobre as funcionalidades que vão transformar a tua relação contigo.
-          </p>
-        </ScrollReveal>
-      </div>
-
-      {/* MOBILE: stacked cards (visible below lg) */}
-      <div className="lg:hidden px-4 sm:px-6 space-y-8 pb-16 max-w-lg mx-auto">
-        {features.map((feature, i) => (
-          <MobileFeatureCard key={i} feature={feature} index={i} />
-        ))}
-      </div>
-
-      {/* DESKTOP: sticky scroll experience (visible lg and above) */}
-      <section ref={containerRef} className="relative hidden lg:block" style={{ height: "400vh" }}>
-        {/* Sticky container */}
-        <div className="sticky top-0 h-dvh flex items-center overflow-hidden">
-          {/* Background glow based on active feature */}
-          <div
-            className="absolute inset-0 pointer-events-none transition-opacity duration-700"
-            style={{ opacity: 0.15 }}
-          >
-            <div
-              className="absolute top-1/4 -right-40 w-80 h-80 rounded-full blur-[120px] transition-colors duration-700"
-              style={{ backgroundColor: features[activeIndex].accent }}
-            />
-            <div
-              className="absolute bottom-1/4 -left-40 w-60 h-60 rounded-full blur-[100px] transition-colors duration-700"
-              style={{ backgroundColor: features[activeIndex === 0 ? 2 : activeIndex - 1]?.accent || "#7B2FBF" }}
-            />
+          <div className="lg:hidden">
+            <ProgressDots activeIndex={activeIndex} />
           </div>
+        </div>
 
-          <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
-            <div className="flex flex-row items-center gap-16">
-              {/* Left side: progress dots + text */}
-              <div className="flex-1 flex flex-row items-start">
-                <ProgressDots activeIndex={activeIndex} />
+        {/* Content area — fills remaining space */}
+        <div className="relative flex-1 flex items-center min-h-0 px-5 sm:px-6 lg:px-8 pb-4 lg:pb-12">
+          <div className="mx-auto max-w-7xl w-full">
+            <div className="flex flex-col lg:flex-row items-center gap-5 lg:gap-16">
+              {/* Text — order 2 on mobile (below phone), order 1 on desktop (left) */}
+              <div className="order-2 lg:order-1 flex-1 w-full">
+                {/* Desktop dots — inline with text */}
+                <div className="hidden lg:flex items-center gap-6">
+                  <ProgressDots activeIndex={activeIndex} />
+                  <div className="relative flex-1 max-w-lg min-h-[240px]">
+                    {features.map((feature, i) => {
+                      const opacity = getFeatureOpacity(progress, i)
+                      return (
+                        <div
+                          key={i}
+                          className="absolute inset-0 flex flex-col justify-center text-left transition-opacity duration-150"
+                          style={{ opacity, visibility: opacity < 0.1 ? "hidden" : "visible" }}
+                          aria-hidden={opacity < 0.5}
+                        >
+                          <Badge accent={feature.accent}>{feature.badge}</Badge>
+                          <h3 className="text-3xl xl:text-4xl font-bold leading-tight tracking-tight mb-4">
+                            <span className="text-white">{feature.title}</span>
+                          </h3>
+                          <p className="text-base text-white/70 leading-relaxed max-w-md">{feature.description}</p>
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
 
-                {/* Stacked text layers */}
-                <div className="relative w-full max-w-xl min-h-[280px]">
+                {/* Mobile text — centered, compact */}
+                <div className="lg:hidden relative w-full min-h-[100px] px-2">
                   {features.map((feature, i) => {
                     const opacity = getFeatureOpacity(progress, i)
                     return (
                       <div
                         key={i}
-                        className="absolute inset-0 flex flex-col justify-center text-left transition-opacity duration-100"
-                        style={{
-                          opacity,
-                          visibility: opacity < 0.1 ? "hidden" : "visible",
-                        }}
+                        className="absolute inset-0 flex flex-col justify-start text-center transition-opacity duration-150"
+                        style={{ opacity, visibility: opacity < 0.1 ? "hidden" : "visible" }}
                         aria-hidden={opacity < 0.5}
                       >
-                        <Badge accent={feature.accent}>{feature.badge}</Badge>
-                        <h3 className="text-4xl xl:text-5xl font-bold leading-tight tracking-tight mb-6">
-                          <span className="bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
-                            {feature.title}
-                          </span>
+                        <span className="inline-block mx-auto mb-2 px-3 py-1 text-[11px] font-semibold uppercase tracking-widest rounded-full bg-white/5 border border-white/10" style={{ color: feature.accent }}>{feature.badge}</span>
+                        <h3 className="text-base sm:text-lg font-bold leading-snug tracking-tight mb-1.5">
+                          <span className="text-white">{feature.title}</span>
                         </h3>
-                        <p className="text-lg text-white/70 leading-relaxed">
-                          {feature.description}
-                        </p>
+                        <p className="text-sm text-white/70 leading-relaxed line-clamp-2">{feature.description}</p>
                       </div>
                     )
                   })}
                 </div>
               </div>
 
-              {/* Right side: phone mockup with cross-fading screens */}
-              <div className="flex-1 flex justify-center">
+              {/* Phone — ONE instance, order 1 on mobile (top), order 2 on desktop (right) */}
+              <div className="order-1 lg:order-2 w-[42%] sm:w-[38%] lg:w-[280px] max-w-[170px] lg:max-w-[280px] shrink-0">
                 <PhoneMockup>
                   <div className="relative w-full h-full">
                     {features.map((feature, i) => {
@@ -638,11 +577,8 @@ export function FeaturesSection() {
                       return (
                         <div
                           key={i}
-                          className="absolute inset-0 transition-opacity duration-100"
-                          style={{
-                            opacity,
-                            visibility: opacity < 0.1 ? "hidden" : "visible",
-                          }}
+                          className="absolute inset-0 transition-opacity duration-150"
+                          style={{ opacity, visibility: opacity < 0.1 ? "hidden" : "visible" }}
                           aria-hidden={opacity < 0.5}
                         >
                           {feature.screen}
@@ -655,7 +591,7 @@ export function FeaturesSection() {
             </div>
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   )
 }

@@ -94,17 +94,17 @@ export function LeadForm() {
           </div>
 
           <h3 className="text-2xl sm:text-3xl font-serif font-bold mb-4 gradient-text">
-            Bem-vindo à jornada!
+            Estás dentro!
           </h3>
 
           <p className="text-muted-foreground mb-8 leading-relaxed">
-            Obrigado por dares esse passo, <span className="text-foreground font-medium">{formData.name.split(' ')[0]}</span>!
-            Estás mais perto de uma vida emocional mais equilibrada. Entraremos em contacto em breve.
+            Boa, <span className="text-foreground font-medium">{formData.name.split(' ')[0]}</span>!
+            Vamos avisar-te assim que o Mirror estiver pronto. Fica atento ao e-mail.
           </p>
 
           <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground bg-card/50 rounded-xl py-3 px-4">
             <Heart className="w-4 h-4 text-[#E91E8C] animate-pulse" />
-            <span>Cuida de ti. Nós cuidamos do resto.</span>
+            <span>Tu cuidas de ti. Nós tratamos do resto.</span>
           </div>
         </div>
       </div>
@@ -129,10 +129,10 @@ export function LeadForm() {
           </div>
 
           <h3 className="text-xl sm:text-2xl font-serif font-bold mb-2 text-foreground">
-            Começa a tua jornada
+            Entra na lista
           </h3>
           <p className="text-sm text-muted-foreground">
-            Junta-te à lista de espera e sê um dos primeiros
+            Sê dos primeiros a experimentar o Mirror.
           </p>
         </div>
 
@@ -144,7 +144,7 @@ export function LeadForm() {
             <Input
               id="name"
               type="text"
-              placeholder="Como podemos chamar-te?"
+              placeholder="O teu nome"
               required
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -154,7 +154,7 @@ export function LeadForm() {
 
           <div className="space-y-2">
             <Label htmlFor="email" className="text-sm font-medium text-foreground">
-              O teu melhor e-mail
+              E-mail
             </Label>
             <Input
               id="email"
@@ -226,7 +226,7 @@ export function LeadForm() {
               <Spinner className="w-5 h-5" />
             ) : (
               <>
-                Quero cuidar da minha mente
+                Quero entrar
                 <ArrowRight className="w-5 h-5 ml-2" />
               </>
             )}

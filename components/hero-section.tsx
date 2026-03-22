@@ -72,7 +72,7 @@ export function HeroSection() {
           <ScrollReveal animation="fade-right" className="flex-1 text-center lg:text-left">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-[#E91E8C]/15 to-[#00D4FF]/15 border border-[#E91E8C]/30 text-sm font-medium mb-8 backdrop-blur-sm">
               <Heart className="h-4 w-4 text-[#E91E8C] animate-pulse" />
-              <span className="gradient-text font-semibold">Cuida da tua saúde mental</span>
+              <span className="gradient-text font-semibold">A tua saúde mental importa</span>
             </div>
 
             <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-foreground mb-6 leading-tight">
@@ -85,44 +85,25 @@ export function HeroSection() {
               </span>
             </h1>
 
-            <p className="text-lg sm:text-xl text-muted-foreground max-w-xl mb-10 leading-relaxed mx-auto lg:mx-0">
-              O Mirror é o teu espaço seguro para reflexão e autoconhecimento.
-              Com inteligência artificial, transformamos os teus pensamentos em
-              <span className="text-[#E91E8C]"> insights profundos </span>
-              sobre a tua saúde emocional.
+            <p className="text-base sm:text-lg text-muted-foreground max-w-md mb-8 leading-relaxed mx-auto lg:mx-0 text-center lg:text-left">
+              Falas, a IA percebe o que sentes e devolve-te
+              <span className="text-[#E91E8C]"> insights sobre ti</span>. Simples.
             </p>
 
-            {/* Feature Pills */}
-            <div className="flex flex-wrap justify-center lg:justify-start gap-4 mb-10">
-              <div className="group flex items-center gap-3 px-5 py-3 rounded-2xl bg-card/60 backdrop-blur-sm border border-border/50 hover:border-[#E91E8C]/50 transition-all duration-300 focus-visible:ring-2 focus-visible:ring-[#E91E8C]/50 focus-visible:outline-none">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#E91E8C]/20 to-[#E91E8C]/5 flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <Brain className="w-6 h-6 text-[#E91E8C]" />
+            {/* Feature Pills — uniform grid */}
+            <div className="grid grid-cols-3 gap-3 mb-10 max-w-md mx-auto lg:mx-0">
+              {[
+                { icon: Brain, label: "Análise Emocional", color: "#E91E8C" },
+                { icon: Shield, label: "100% Privado", color: "#00D4FF" },
+                { icon: Sparkles, label: "Insights Diários", color: "#7B2FBF" },
+              ].map(({ icon: Icon, label, color }) => (
+                <div key={label} className="group flex flex-col items-center gap-2 py-4 px-3 rounded-2xl bg-card/60 backdrop-blur-sm border border-border/50 hover:border-white/20 transition-all duration-300 text-center">
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform" style={{ background: `linear-gradient(135deg, ${color}30, ${color}10)` }}>
+                    <Icon className="w-5 h-5" style={{ color }} />
+                  </div>
+                  <p className="text-xs font-semibold text-foreground leading-tight">{label}</p>
                 </div>
-                <div className="text-left">
-                  <p className="text-sm font-bold text-foreground">Análise Emocional</p>
-                  <p className="text-xs text-muted-foreground">IA que te compreende</p>
-                </div>
-              </div>
-
-              <div className="group flex items-center gap-3 px-5 py-3 rounded-2xl bg-card/60 backdrop-blur-sm border border-border/50 hover:border-[#00D4FF]/50 transition-all duration-300 focus-visible:ring-2 focus-visible:ring-[#E91E8C]/50 focus-visible:outline-none">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#00D4FF]/20 to-[#00D4FF]/5 flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <Shield className="w-6 h-6 text-[#00D4FF]" />
-                </div>
-                <div className="text-left">
-                  <p className="text-sm font-bold text-foreground">100% Privado</p>
-                  <p className="text-xs text-muted-foreground">Os teus dados protegidos</p>
-                </div>
-              </div>
-
-              <div className="group flex items-center gap-3 px-5 py-3 rounded-2xl bg-card/60 backdrop-blur-sm border border-border/50 hover:border-[#7B2FBF]/50 transition-all duration-300 focus-visible:ring-2 focus-visible:ring-[#E91E8C]/50 focus-visible:outline-none">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#7B2FBF]/20 to-[#7B2FBF]/5 flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <Sparkles className="w-6 h-6 text-[#7B2FBF]" />
-                </div>
-                <div className="text-left">
-                  <p className="text-sm font-bold text-foreground">Insights Diários</p>
-                  <p className="text-xs text-muted-foreground">Evolui todos os dias</p>
-                </div>
-              </div>
+              ))}
             </div>
           </ScrollReveal>
 

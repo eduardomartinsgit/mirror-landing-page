@@ -135,8 +135,7 @@ export function StatsSection() {
             </span>
           </h2>
           <p className="mt-6 text-base leading-relaxed text-white/70 sm:text-lg">
-            O sistema público está sobrecarregado. 22% dos portugueses são afetados por perturbações
-            psiquiátricas — acima da média europeia de 16,7%.
+            O SNS não dá conta. 22% dos portugueses vivem com perturbações de saúde mental. É mais do que a média europeia.
           </p>
           <a
             href="https://www.cambridge.org/core/journals/the-british-journal-of-psychiatry/article/epidemiology-of-mental-disorders-in-portugal/3DC9E0C9B6D4E0C1A5D5B8F2E1A3C5D7"

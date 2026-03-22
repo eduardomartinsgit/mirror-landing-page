@@ -12,42 +12,42 @@ const faqs = [
   {
     question: "O que é o Mirror?",
     answer:
-      "O Mirror é um diário de voz com análise emocional por inteligência artificial. Falas durante alguns minutos por dia, e a IA transcreve as tuas palavras, detecta emoções e devolve-te insights personalizados em português europeu. Inclui funcionalidades como a linha temporal emocional, o Mirror Score e um modo de emergência. O Mirror não é um substituto para acompanhamento profissional de saúde mental — é uma ferramenta complementar de autoconhecimento.",
+      "O Mirror é um diário de voz com IA. Falas uns minutos por dia, a IA transcreve, detecta emoções e devolve-te insights em português. Tens uma timeline emocional, o Mirror Score e um modo para os dias mais difíceis. Não substitui acompanhamento profissional. É uma ferramenta para te conheceres melhor.",
   },
   {
     question: "O Mirror substitui um psicólogo?",
     answer:
-      "Não, de forma alguma. O Mirror é uma ferramenta de autoconhecimento que complementa, mas nunca substitui, o acompanhamento de um profissional de saúde mental qualificado. A aplicação não faz diagnósticos clínicos, não prescreve tratamentos e não emite qualquer tipo de parecer médico. Em conformidade com o Regulamento Europeu de Dispositivos Médicos (EU MDR 2017/745), o Mirror não faz reivindicações clínicas. Se sentires que precisas de apoio profissional, recomendamos sempre que procures ajuda especializada.",
+      "Não. O Mirror ajuda-te a conhecer-te melhor, mas não substitui um psicólogo. Não faz diagnósticos nem dá conselhos clínicos. Em conformidade com o EU MDR 2017/745, o Mirror não faz reivindicações clínicas. Se precisares de ajuda profissional, procura um especialista.",
   },
   {
     question: "Os meus dados estão seguros?",
     answer:
-      "Sim. A segurança dos teus dados é tratada com o máximo rigor. Todos os dados são encriptados com AES-256 em repouso e TLS 1.3 em trânsito. A nível de base de dados, utilizamos Row Level Security (RLS) para garantir que apenas tu acedes aos teus registos. Por se tratarem de dados relativos a saúde, aplica-se o RGPD Art. 9 (categorias especiais de dados pessoais), sendo o tratamento baseado no teu consentimento explícito nos termos do Art. 6(1)(a). Os dados ficam armazenados na União Europeia (Frankfurt, Alemanha). A autoridade de controlo competente é a CNPD (Comissão Nacional de Proteção de Dados).",
+      "Sim. Tudo encriptado com AES-256 em repouso e TLS 1.3 em trânsito. Só tu acedes aos teus dados graças a Row Level Security. Como são dados de saúde, aplica-se o RGPD Art. 9 e o tratamento baseia-se no teu consentimento explícito (Art. 6(1)(a)). Dados armazenados na UE (Frankfurt). Autoridade de controlo: CNPD.",
   },
   {
     question: "Como funciona o diário de voz?",
     answer:
-      "Falas entre 2 a 5 minutos por dia sobre o que sentiste, pensaste ou viveste. A IA transcreve o teu registo de voz, analisa as emoções presentes e devolve-te insights personalizados em português europeu. Ao longo do tempo, constróis uma linha temporal emocional que te ajuda a identificar padrões e a conhecer-te melhor. Nenhum dado é partilhado com terceiros sem o teu consentimento explícito, conforme o RGPD Art. 7.",
+      "Falas 2 a 5 minutos por dia sobre o que sentiste ou viveste. A IA transcreve, analisa emoções e dá-te insights em português. Com o tempo, vais construindo uma timeline que te ajuda a ver padrões. Nenhum dado é partilhado com terceiros sem o teu consentimento (RGPD Art. 7).",
   },
   {
     question: "Quanto custa o Mirror?",
     answer:
-      "O Mirror tem um plano gratuito com 7 entradas por mês. O plano Essencial custa €5,99/mês ou €47,99/ano (poupas 33%). Sem compromisso — podes cancelar a qualquer momento. Os pagamentos são processados de forma segura via Stripe, com suporte para cartão bancário e SEPA.",
+      "Tem um plano gratuito com 7 entradas por mês. O Essencial custa €5,99/mês ou €47,99/ano (poupas 33%). Sais quando quiseres. Pagamentos seguros via Stripe, com cartão ou SEPA.",
   },
   {
     question: "Posso apagar os meus dados?",
     answer:
-      "Sim. Tens o direito ao apagamento dos teus dados nos termos do RGPD Art. 17 (direito a ser esquecido). O Mirror disponibiliza um botão «Apagar tudo» que remove os teus dados de todos os sistemas e sub-processadores num prazo máximo de 30 dias. Tens também o direito à portabilidade dos dados (RGPD Art. 20), podendo exportar as tuas entradas a qualquer momento.",
+      "Sim. Tens um botão «Apagar tudo» que remove os teus dados em até 30 dias, conforme o RGPD Art. 17 (direito a ser esquecido). Podes também exportar tudo a qualquer momento (RGPD Art. 20).",
   },
   {
     question: "O Mirror usa os meus dados para treinar IA?",
     answer:
-      "Não. As tuas gravações de voz e entradas de diário nunca são utilizadas para treinar modelos de inteligência artificial. Os teus dados são processados exclusivamente para gerar os teus insights pessoais, em estrito cumprimento do princípio da limitação da finalidade previsto no RGPD Art. 5(1)(b).",
+      "Não. As tuas gravações e entradas nunca são usadas para treinar IA. Os teus dados servem apenas para gerar os teus insights, conforme o RGPD Art. 5(1)(b).",
   },
   {
     question: "A partir de que idade posso usar o Mirror?",
     answer:
-      "Podes utilizar o Mirror a partir dos 16 anos. Este limite está em conformidade com o RGPD Art. 8 (condições aplicáveis ao consentimento de menores) e com a Lei 58/2019 Art. 16 (lei portuguesa de proteção de dados), que fixa os 16 anos como idade mínima para consentimento autónomo no tratamento de dados pessoais.",
+      "A partir dos 16 anos. É o mínimo definido pelo RGPD Art. 8 e pela Lei 58/2019 Art. 16 para consentimento autónomo em Portugal.",
   },
 ]
 
@@ -65,7 +65,7 @@ export function FaqSection() {
               Perguntas <span className="gradient-text">frequentes</span>
             </h2>
             <p className="text-lg text-muted-foreground">
-              Esclarece as tuas dúvidas sobre o Mirror.
+              As dúvidas mais comuns.
             </p>
           </div>
         </ScrollReveal>

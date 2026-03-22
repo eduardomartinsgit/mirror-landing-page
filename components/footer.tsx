@@ -41,8 +41,7 @@ export function Footer() {
               <Logo />
             </Link>
             <p className="text-muted-foreground max-w-xs mb-6 leading-relaxed">
-              O teu companheiro diário para autoconhecimento e bem-estar emocional,
-              potenciado por inteligência artificial.
+              O teu diário de voz com IA. Para te conheceres melhor, um dia de cada vez.
             </p>
             <div className="flex gap-3">
               {socialLinks.map((social) => (

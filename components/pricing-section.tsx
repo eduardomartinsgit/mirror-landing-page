@@ -10,7 +10,7 @@ import { ScrollReveal } from "@/components/scroll-reveal"
 const plans = [
   {
     name: "Free",
-    description: "Para quem quer começar a conhecer-se melhor",
+    description: "Para experimentar",
     monthlyPrice: 0,
     yearlyPrice: 0,
     features: [
@@ -25,7 +25,7 @@ const plans = [
   },
   {
     name: "Essencial",
-    description: "Para quem leva o autoconhecimento a sério",
+    description: "Para quem quer mesmo cuidar de si",
     monthlyPrice: 5.99,
     yearlyPrice: 47.99,
     features: [
@@ -44,7 +44,7 @@ const plans = [
   },
   {
     name: "Plus",
-    description: "Para quem quer o máximo de profundidade",
+    description: "Para ir mais fundo",
     monthlyPrice: 9.99,
     yearlyPrice: 79.99,
     features: [
@@ -87,7 +87,7 @@ export function PricingSection() {
               Planos para <span className="gradient-text">todos</span>
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
-              A partir de €0. O plano Essencial custa menos que um café por semana.
+              Começa a €0. O Essencial sai-te a menos que um café por semana.
             </p>
 
             {/* Yearly / Monthly toggle */}
