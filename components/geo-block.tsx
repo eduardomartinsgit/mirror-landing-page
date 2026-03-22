@@ -44,7 +44,7 @@ export function GeoBlock({ onClose }: GeoBlockProps) {
           <h1 className="text-2xl sm:text-3xl font-serif font-bold bg-gradient-to-r from-[#E91E8C] to-[#00D4FF] bg-clip-text text-transparent">
             O Mirror ainda não está disponível no teu país.
           </h1>
-          <p className="text-base text-gray-400 leading-relaxed">
+          <p className="text-base text-gray-300 leading-relaxed">
             Estamos a trabalhar para chegar a mais lugares em breve. Deixa o teu e-mail e avisamos-te quando estivermos disponíveis na tua região.
           </p>
         </div>
@@ -54,7 +54,7 @@ export function GeoBlock({ onClose }: GeoBlockProps) {
           <h2 className="text-xl sm:text-2xl font-serif font-bold text-white/80">
             Mirror is not yet available in your country.
           </h2>
-          <p className="text-sm text-gray-500 leading-relaxed">
+          <p className="text-sm text-gray-400 leading-relaxed">
             We&apos;re working to reach more places soon. Leave your email and we&apos;ll let you know when we&apos;re available in your region.
           </p>
         </div>
@@ -68,7 +68,7 @@ export function GeoBlock({ onClose }: GeoBlockProps) {
               placeholder="email@exemplo.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="flex-1 h-12 px-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-gray-500 focus:outline-none focus:border-[#E91E8C]/60 focus:ring-1 focus:ring-[#E91E8C]/30 text-base"
+              className="flex-1 h-12 px-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-gray-400 focus:outline-none focus:border-[#E91E8C]/60 focus:ring-1 focus:ring-[#E91E8C]/30 text-base"
             />
             <button
               type="submit"
@@ -82,14 +82,14 @@ export function GeoBlock({ onClose }: GeoBlockProps) {
             <p className="text-[#00D4FF] font-medium">
               Obrigado! Entraremos em contacto em breve.
             </p>
-            <p className="text-gray-500 text-sm mt-1">
+            <p className="text-gray-400 text-sm mt-1">
               Thank you! We&apos;ll be in touch soon.
             </p>
           </div>
         )}
 
         {/* Country note */}
-        <p className="text-xs text-gray-600 mt-6">
+        <p className="text-xs text-gray-500 mt-6">
           🇵🇹 Disponível em Portugal / Available in Portugal
         </p>
 
@@ -97,7 +97,7 @@ export function GeoBlock({ onClose }: GeoBlockProps) {
         {onClose && (
           <button
             onClick={onClose}
-            className="text-xs text-gray-600 hover:text-gray-400 underline underline-offset-2 transition-colors"
+            className="text-xs text-gray-500 hover:text-gray-300 underline underline-offset-2 transition-colors"
           >
             Fechar / Close
           </button>

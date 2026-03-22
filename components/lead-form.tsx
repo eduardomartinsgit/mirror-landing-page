@@ -167,7 +167,7 @@ export function LeadForm() {
               className="h-13 bg-background/60 border-border/50 focus:border-[#E91E8C] focus:ring-[#E91E8C]/30 rounded-xl placeholder:text-muted-foreground/50 text-base"
             />
             {errors.email && (
-              <p className="text-sm text-red-400">{errors.email}</p>
+              <p className="text-sm text-red-400" role="alert">{errors.email}</p>
             )}
           </div>
 
@@ -185,7 +185,7 @@ export function LeadForm() {
               className="h-13 bg-background/60 border-border/50 focus:border-[#E91E8C] focus:ring-[#E91E8C]/30 rounded-xl placeholder:text-muted-foreground/50 text-base"
             />
             {errors.phone && (
-              <p className="text-sm text-red-400">{errors.phone}</p>
+              <p className="text-sm text-red-400" role="alert">{errors.phone}</p>
             )}
           </div>
 
@@ -211,7 +211,7 @@ export function LeadForm() {
 
           {/* Error message */}
           {error && (
-            <div className="flex items-center gap-2 text-sm text-red-400 bg-red-400/10 rounded-xl px-4 py-3">
+            <div className="flex items-center gap-2 text-sm text-red-400 bg-red-400/10 rounded-xl px-4 py-3" role="alert">
               <AlertCircle className="w-4 h-4 flex-shrink-0" />
               <span>{error}</span>
             </div>

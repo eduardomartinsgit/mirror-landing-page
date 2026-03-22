@@ -49,7 +49,7 @@ export function Footer() {
                 <Link
                   key={social.label}
                   href={social.href}
-                  className="w-10 h-10 rounded-xl bg-muted/50 flex items-center justify-center hover:bg-[#E91E8C]/20 hover:text-[#E91E8C] transition-all duration-300 text-muted-foreground"
+                  className="w-10 h-10 rounded-xl bg-muted/50 flex items-center justify-center hover:bg-[#E91E8C]/20 hover:text-[#E91E8C] transition-all duration-300 text-muted-foreground focus-visible:ring-2 focus-visible:ring-[#E91E8C]/50 focus-visible:outline-none"
                   aria-label={social.label}
                 >
                   <social.icon className="h-5 w-5" />
@@ -66,7 +66,7 @@ export function Footer() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-muted-foreground hover:text-[#E91E8C] transition-colors"
+                    className="text-muted-foreground hover:text-[#E91E8C] transition-colors focus-visible:ring-2 focus-visible:ring-[#E91E8C]/50 focus-visible:outline-none rounded"
                   >
                     {link.label}
                   </Link>
@@ -82,7 +82,7 @@ export function Footer() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-muted-foreground hover:text-[#E91E8C] transition-colors"
+                    className="text-muted-foreground hover:text-[#E91E8C] transition-colors focus-visible:ring-2 focus-visible:ring-[#E91E8C]/50 focus-visible:outline-none rounded"
                   >
                     {link.label}
                   </Link>
@@ -98,7 +98,7 @@ export function Footer() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-muted-foreground hover:text-[#E91E8C] transition-colors"
+                    className="text-muted-foreground hover:text-[#E91E8C] transition-colors focus-visible:ring-2 focus-visible:ring-[#E91E8C]/50 focus-visible:outline-none rounded"
                   >
                     {link.label}
                   </Link>

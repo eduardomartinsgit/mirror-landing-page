@@ -40,7 +40,7 @@ export function CtaSection() {
             <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 text-balance">
               Começa a tua jornada de autoconhecimento
             </h2>
-            <p className="text-lg text-white/80 max-w-2xl mx-auto mb-8">
+            <p className="text-lg text-white/90 max-w-2xl mx-auto mb-8">
               Entra na lista de espera e sê um dos primeiros a experimentar
               o Mirror. Vagas limitadas para o acesso antecipado.
             </p>
@@ -54,7 +54,7 @@ export function CtaSection() {
               <ArrowRight className="h-5 w-5" />
             </Button>
 
-            <p className="mt-6 text-sm text-white/60">
+            <p className="mt-6 text-sm text-white/70">
               Sem compromisso. Cancela quando quiseres.
             </p>
           </div>

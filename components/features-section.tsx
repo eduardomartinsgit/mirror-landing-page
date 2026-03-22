@@ -35,15 +35,15 @@ function Badge({ children, accent }: { children: React.ReactNode; accent: string
 function VoiceDiaryScreen() {
   const barHeights = [18, 32, 24, 40, 28, 36, 20, 44, 30, 22, 38, 26, 42, 16, 34, 28, 46, 20, 36, 30, 24, 40, 18, 32, 44, 22, 38, 34, 26, 42]
   return (
-    <div className="flex flex-col h-full gap-3 text-white">
+    <div className="flex flex-col h-full gap-3 text-white" role="img" aria-label="Simulação do ecrã do Mirror">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
           <p className="text-sm font-semibold">Diário de Voz</p>
-          <p className="text-[10px] text-white/40">Terça, 18 Mar 2026</p>
+          <p className="text-xs text-white/60">Terça, 18 Mar 2026</p>
         </div>
         <div className="w-7 h-7 rounded-full bg-gradient-to-br from-[#E91E8C] to-[#7B2FBF] flex items-center justify-center">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" aria-hidden="true">
             <path d="M12 1v14M19 10a7 7 0 01-14 0M12 19v4M8 23h8" />
           </svg>
         </div>
@@ -51,7 +51,7 @@ function VoiceDiaryScreen() {
 
       {/* Waveform */}
       <div className="flex-1 flex flex-col items-center justify-center gap-4">
-        <svg viewBox="0 0 240 60" className="w-full h-14">
+        <svg viewBox="0 0 240 60" className="w-full h-14" aria-hidden="true">
           <defs>
             <linearGradient id="waveGrad" x1="0" y1="0" x2="1" y2="0">
               <stop offset="0%" stopColor="#E91E8C" />
@@ -86,7 +86,7 @@ function VoiceDiaryScreen() {
 
       {/* Emotions detected */}
       <div>
-        <p className="text-[10px] text-white/40 mb-1.5">Emoções detectadas</p>
+        <p className="text-xs text-white/60 mb-1.5">Emoções detectadas</p>
         <div className="flex gap-1.5 flex-wrap">
           {[
             { label: "Ansiedade", color: "#E91E8C" },
@@ -95,7 +95,7 @@ function VoiceDiaryScreen() {
           ].map((e) => (
             <span
               key={e.label}
-              className="px-2.5 py-1 rounded-full text-[10px] font-medium"
+              className="px-2.5 py-1 rounded-full text-xs font-medium"
               style={{ backgroundColor: e.color + "20", color: e.color }}
             >
               {e.label}
@@ -108,7 +108,7 @@ function VoiceDiaryScreen() {
       <div className="rounded-xl bg-white/5 border border-white/10 p-3">
         <div className="flex items-start gap-2">
           <span className="text-sm mt-0.5">💡</span>
-          <p className="text-[10px] text-white/70 leading-relaxed">
+          <p className="text-xs text-white/70 leading-relaxed">
             <span className="text-white/90 font-medium">Padrão detectado:</span> às terças sentes mais ansiedade
           </p>
         </div>
@@ -131,16 +131,16 @@ function EmotionalTimelineScreen() {
   const days = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"]
 
   return (
-    <div className="flex flex-col h-full gap-3 text-white">
+    <div className="flex flex-col h-full gap-3 text-white" role="img" aria-label="Simulação do ecrã do Mirror">
       {/* Header */}
       <div>
         <p className="text-sm font-semibold">Timeline Emocional</p>
-        <p className="text-[10px] text-white/40">Última semana</p>
+        <p className="text-xs text-white/60">Última semana</p>
       </div>
 
       {/* Chart */}
       <div className="flex-1 flex flex-col justify-center">
-        <svg viewBox="0 0 248 80" className="w-full">
+        <svg viewBox="0 0 248 80" className="w-full" aria-hidden="true">
           <defs>
             <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
               <stop offset="0%" stopColor="#E91E8C" />
@@ -171,7 +171,7 @@ function EmotionalTimelineScreen() {
         {/* Day labels */}
         <div className="flex justify-between px-1 mt-1">
           {days.map((d) => (
-            <span key={d} className="text-[9px] text-white/30">{d}</span>
+            <span key={d} className="text-[11px] text-white/60">{d}</span>
           ))}
         </div>
       </div>
@@ -185,7 +185,7 @@ function EmotionalTimelineScreen() {
         ].map((e) => (
           <div key={e.label} className="flex items-center gap-1.5">
             <div className="w-2 h-2 rounded-full" style={{ backgroundColor: e.color }} />
-            <span className="text-[9px] text-white/50">{e.label}</span>
+            <span className="text-[11px] text-white/70">{e.label}</span>
           </div>
         ))}
       </div>
@@ -194,7 +194,7 @@ function EmotionalTimelineScreen() {
       <div className="rounded-xl bg-white/5 border border-white/10 p-3">
         <div className="flex items-start gap-2">
           <span className="text-sm mt-0.5">📊</span>
-          <p className="text-[10px] text-white/70 leading-relaxed">
+          <p className="text-xs text-white/70 leading-relaxed">
             <span className="text-white/90 font-medium">Insight:</span> depois de exercício o teu humor melhora 40%
           </p>
         </div>
@@ -207,7 +207,7 @@ function EmotionalTimelineScreen() {
           { label: "Mais frequente", value: "Calma", color: "#7B2FBF" },
         ].map((s) => (
           <div key={s.label} className="flex-1 rounded-lg bg-white/5 p-2">
-            <p className="text-[9px] text-white/40">{s.label}</p>
+            <p className="text-[11px] text-white/60">{s.label}</p>
             <p className="text-xs font-semibold" style={{ color: s.color }}>{s.value}</p>
           </div>
         ))}
@@ -224,16 +224,16 @@ function MirrorScoreScreen() {
   const barDays = ["S", "T", "Q", "Q", "S", "S", "D"]
 
   return (
-    <div className="flex flex-col h-full gap-3 text-white items-center">
+    <div className="flex flex-col h-full gap-3 text-white items-center" role="img" aria-label="Simulação do ecrã do Mirror">
       {/* Header */}
       <div className="w-full">
         <p className="text-sm font-semibold text-center">Mirror Score&trade;</p>
-        <p className="text-[10px] text-white/40 text-center">O teu índice de bem-estar</p>
+        <p className="text-xs text-white/60 text-center">O teu índice de bem-estar</p>
       </div>
 
       {/* Gauge */}
       <div className="relative flex items-center justify-center py-2">
-        <svg width="140" height="140" viewBox="0 0 120 120">
+        <svg width="140" height="140" viewBox="0 0 120 120" aria-hidden="true">
           <defs>
             <linearGradient id="gaugeGrad" x1="0" y1="0" x2="1" y2="1">
               <stop offset="0%" stopColor="#E91E8C" />
@@ -260,14 +260,14 @@ function MirrorScoreScreen() {
           <span className="text-4xl font-bold bg-gradient-to-br from-[#E91E8C] via-[#7B2FBF] to-[#00D4FF] bg-clip-text text-transparent">
             78
           </span>
-          <span className="text-[9px] text-white/40 -mt-0.5">de 100</span>
+          <span className="text-[11px] text-white/60 -mt-0.5">de 100</span>
         </div>
       </div>
 
       {/* Trend */}
       <div className="flex items-center gap-4 justify-center">
         <div className="flex items-center gap-1 text-[#00D4FF]">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden="true">
             <path d="M18 15l-6-6-6 6" />
           </svg>
           <span className="text-xs font-semibold">+5 esta semana</span>
@@ -280,7 +280,7 @@ function MirrorScoreScreen() {
 
       {/* Weekly bars */}
       <div className="w-full px-2">
-        <p className="text-[10px] text-white/40 mb-2">Últimos 7 dias</p>
+        <p className="text-xs text-white/60 mb-2">Últimos 7 dias</p>
         <div className="flex items-end justify-between gap-1.5 h-16">
           {weekBars.map((v, i) => (
             <div key={i} className="flex-1 flex flex-col items-center gap-1">
@@ -294,7 +294,7 @@ function MirrorScoreScreen() {
                   }}
                 />
               </div>
-              <span className="text-[8px] text-white/30">{barDays[i]}</span>
+              <span className="text-[11px] text-white/60">{barDays[i]}</span>
             </div>
           ))}
         </div>
@@ -308,7 +308,7 @@ function MirrorScoreScreen() {
           { label: "Consistência", value: "94%", color: "#E91E8C" },
         ].map((s) => (
           <div key={s.label} className="flex-1 rounded-lg bg-white/5 p-2 text-center">
-            <p className="text-[8px] text-white/40">{s.label}</p>
+            <p className="text-[11px] text-white/60">{s.label}</p>
             <p className="text-xs font-bold" style={{ color: s.color }}>{s.value}</p>
           </div>
         ))}
@@ -319,20 +319,20 @@ function MirrorScoreScreen() {
 
 function EmergencyModeScreen() {
   return (
-    <div className="flex flex-col h-full text-white items-center relative">
+    <div className="flex flex-col h-full text-white items-center relative" role="img" aria-label="Simulação do ecrã do Mirror">
       {/* Calming gradient background */}
       <div className="absolute inset-0 -m-4 bg-gradient-to-b from-[#7B2FBF]/30 via-[#0D0B14] to-[#0D0B14]" />
 
       <div className="relative flex flex-col h-full items-center gap-3 w-full">
         {/* Header */}
         <div className="flex items-center gap-2 w-full">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#E91E8C">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#E91E8C" aria-hidden="true">
             <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
           </svg>
           <p className="text-sm font-semibold">Modo Desabafar</p>
         </div>
 
-        <p className="text-[10px] text-white/40 w-full">Exercício de respiração guiada</p>
+        <p className="text-xs text-white/60 w-full">Exercício de respiração guiada</p>
 
         {/* Breathing circle */}
         <div className="flex-1 flex flex-col items-center justify-center gap-4">
@@ -381,15 +381,15 @@ function EmergencyModeScreen() {
                 key={p.label}
                 className="px-3 py-1.5 rounded-full text-center"
                 style={{
-                  backgroundColor: p.active ? "#7B2FBF30" : "rgba(255,255,255,0.05)",
+                  backgroundColor: p.active ? "#7B2FBF30" : "rgba(255,255,255,0.08)",
                   borderWidth: 1,
-                  borderColor: p.active ? "#7B2FBF60" : "rgba(255,255,255,0.05)",
+                  borderColor: p.active ? "#7B2FBF60" : "rgba(255,255,255,0.08)",
                 }}
               >
-                <p className="text-[9px] font-medium" style={{ color: p.active ? "#E91E8C" : "rgba(255,255,255,0.4)" }}>
+                <p className="text-[11px] font-medium" style={{ color: p.active ? "#E91E8C" : "rgba(255,255,255,0.6)" }}>
                   {p.label}
                 </p>
-                <p className="text-[10px] font-bold" style={{ color: p.active ? "#ffffff" : "rgba(255,255,255,0.3)" }}>
+                <p className="text-xs font-bold" style={{ color: p.active ? "#ffffff" : "rgba(255,255,255,0.6)" }}>
                   {p.sec}
                 </p>
               </div>
@@ -402,10 +402,10 @@ function EmergencyModeScreen() {
           {["4-7-8", "5-4-3-2-1"].map((t, i) => (
             <div
               key={t}
-              className="flex-1 text-center py-1.5 rounded-lg text-[10px] font-medium"
+              className="flex-1 text-center py-1.5 rounded-lg text-xs font-medium"
               style={{
-                backgroundColor: i === 0 ? "#7B2FBF25" : "rgba(255,255,255,0.05)",
-                color: i === 0 ? "#00D4FF" : "rgba(255,255,255,0.4)",
+                backgroundColor: i === 0 ? "#7B2FBF25" : "rgba(255,255,255,0.08)",
+                color: i === 0 ? "#00D4FF" : "rgba(255,255,255,0.6)",
                 borderWidth: 1,
                 borderColor: i === 0 ? "#7B2FBF40" : "transparent",
               }}
@@ -481,10 +481,13 @@ const features: Feature[] = [
 
 function ProgressDots({ activeIndex }: { activeIndex: number }) {
   return (
-    <div className="flex lg:flex-col gap-3 items-center mb-6 lg:mb-0 lg:mr-8">
-      {features.map((_, i) => (
+    <div className="flex lg:flex-col gap-3 items-center mb-6 lg:mb-0 lg:mr-8" role="tablist" aria-label="Funcionalidades do Mirror">
+      {features.map((feature, i) => (
         <div
           key={i}
+          role="tab"
+          aria-selected={i === activeIndex}
+          aria-label={feature.badge}
           className="w-2.5 h-2.5 rounded-full transition-all duration-500"
           style={{
             background:
@@ -522,7 +525,7 @@ export function FeaturesSection() {
               Mirror
             </span>
           </h2>
-          <p className="text-base sm:text-lg text-white/50 max-w-xl mx-auto">
+          <p className="text-base sm:text-lg text-white/70 max-w-xl mx-auto">
             Navega pelas funcionalidades do MVP enquanto fazes scroll.
           </p>
         </ScrollReveal>
@@ -561,8 +564,9 @@ export function FeaturesSection() {
                       className="absolute inset-0 flex flex-col justify-center transition-opacity duration-100 text-center lg:text-left"
                       style={{
                         opacity,
-                        pointerEvents: opacity > 0.5 ? "auto" : "none",
+                        visibility: opacity < 0.1 ? "hidden" : "visible",
                       }}
+                      aria-hidden={opacity < 0.5}
                     >
                       <Badge accent={feature.accent}>{feature.badge}</Badge>
                       <h3 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight tracking-tight mb-4 lg:mb-6">
@@ -570,7 +574,7 @@ export function FeaturesSection() {
                           {feature.title}
                         </span>
                       </h3>
-                      <p className="text-sm sm:text-base lg:text-lg text-white/60 leading-relaxed">
+                      <p className="text-base sm:text-lg text-white/70 leading-relaxed">
                         {feature.description}
                       </p>
                     </div>
@@ -591,8 +595,9 @@ export function FeaturesSection() {
                         className="absolute inset-0 transition-opacity duration-100"
                         style={{
                           opacity,
-                          pointerEvents: opacity > 0.5 ? "auto" : "none",
+                          visibility: opacity < 0.1 ? "hidden" : "visible",
                         }}
+                        aria-hidden={opacity < 0.5}
                       >
                         {feature.screen}
                       </div>

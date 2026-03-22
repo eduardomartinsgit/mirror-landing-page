@@ -50,14 +50,14 @@ function StatItem({ value, suffix, description, source, sourceUrl, delay, isVisi
         {count}
         {suffix}
       </span>
-      <p className="mt-4 max-w-[260px] text-sm leading-relaxed text-white/60 sm:text-base">
+      <p className="mt-4 max-w-[260px] text-sm leading-relaxed text-white/70 sm:text-base">
         {description}
       </p>
       <a
         href={sourceUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="mt-2 max-w-[260px] text-[10px] leading-snug text-[#00D4FF]/40 italic hover:text-[#00D4FF]/70 transition-colors underline underline-offset-2"
+        className="mt-2 max-w-[260px] text-[10px] leading-snug text-[#00D4FF]/70 italic hover:text-[#00D4FF]/90 transition-colors underline underline-offset-2"
       >
         {source}
       </a>
@@ -134,7 +134,7 @@ export function StatsSection() {
               Mirror
             </span>
           </h2>
-          <p className="mt-6 text-base leading-relaxed text-white/50 sm:text-lg">
+          <p className="mt-6 text-base leading-relaxed text-white/70 sm:text-lg">
             O sistema público está sobrecarregado. 22% dos portugueses são afetados por perturbações
             psiquiátricas — acima da média europeia de 16,7%.
           </p>
@@ -142,7 +142,7 @@ export function StatsSection() {
             href="https://www.cambridge.org/core/journals/the-british-journal-of-psychiatry/article/epidemiology-of-mental-disorders-in-portugal/3DC9E0C9B6D4E0C1A5D5B8F2E1A3C5D7"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block mt-2 text-xs text-[#00D4FF]/40 italic hover:text-[#00D4FF]/70 transition-colors underline underline-offset-2"
+            className="inline-block mt-2 text-xs text-[#00D4FF]/70 italic hover:text-[#00D4FF]/90 transition-colors underline underline-offset-2"
           >
             Fonte: World Mental Health Survey — Harvard Medical School / NOVA Medical School, 2023
           </a>
