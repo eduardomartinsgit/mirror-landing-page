@@ -3,6 +3,8 @@
 import { ScrollReveal } from "@/components/scroll-reveal"
 import { PhoneMockup } from "@/components/phone-mockup"
 import { useScrollProgress } from "@/hooks/use-scroll-progress"
+import { useEffect, useState } from "react"
+import { Mic, BarChart3, Gauge, HeartHandshake } from "lucide-react"
 
 /* ─── helpers ─── */
 
@@ -414,6 +416,19 @@ interface Feature {
   description: string
   screen: React.ReactNode
   accent: string
+  icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>
+}
+
+function useIsLandscape() {
+  const [isLandscape, setIsLandscape] = useState(false)
+  useEffect(() => {
+    const mq = window.matchMedia("(orientation: landscape) and (max-height: 500px)")
+    const update = () => setIsLandscape(mq.matches)
+    update()
+    mq.addEventListener("change", update)
+    return () => mq.removeEventListener("change", update)
+  }, [])
+  return isLandscape
 }
 
 const features: Feature[] = [
@@ -424,6 +439,7 @@ const features: Feature[] = [
       "Gravas a tua voz, a IA percebe o que sentes e devolve-te reflexões úteis.",
     screen: <VoiceDiaryScreen />,
     accent: "#E91E8C",
+    icon: Mic,
   },
   {
     badge: "Os teus padrões",
@@ -432,6 +448,7 @@ const features: Feature[] = [
       "As tuas emoções num gráfico. Vê padrões que não notavas.",
     screen: <EmotionalTimelineScreen />,
     accent: "#7B2FBF",
+    icon: BarChart3,
   },
   {
     badge: "O teu score",
@@ -440,6 +457,7 @@ const features: Feature[] = [
       "De 0 a 100, vê como estás e acompanha a tua evolução.",
     screen: <MirrorScoreScreen />,
     accent: "#00D4FF",
+    icon: Gauge,
   },
   {
     badge: "Para os dias difíceis",
@@ -448,6 +466,7 @@ const features: Feature[] = [
       "Exercícios de respiração e técnicas para acalmar. Sem julgamento.",
     screen: <EmergencyModeScreen />,
     accent: "#E91E8C",
+    icon: HeartHandshake,
   },
 ]
 
@@ -481,15 +500,43 @@ function ProgressDots({ activeIndex }: { activeIndex: number }) {
   )
 }
 
+/* ─── landscape feature card ─── */
+
+function LandscapeFeatureCard({ feature, opacity }: { feature: Feature; opacity: number }) {
+  const Icon = feature.icon
+  return (
+    <div
+      className="absolute inset-0 flex items-center justify-center transition-opacity duration-150"
+      style={{ opacity, visibility: opacity < 0.1 ? "hidden" : "visible" }}
+      aria-hidden={opacity < 0.5}
+    >
+      <div className="flex items-center gap-5 max-w-xl w-full px-6">
+        <div
+          className="w-16 h-16 rounded-2xl flex items-center justify-center shrink-0"
+          style={{ background: `linear-gradient(135deg, ${feature.accent}30, ${feature.accent}10)` }}
+        >
+          <Icon className="w-8 h-8" style={{ color: feature.accent }} />
+        </div>
+        <div>
+          <span className="text-[10px] font-semibold uppercase tracking-widest" style={{ color: feature.accent }}>{feature.badge}</span>
+          <h3 className="text-lg font-bold text-white leading-tight">{feature.title}</h3>
+          <p className="text-sm text-white/70 leading-relaxed mt-1">{feature.description}</p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 /* ─── main export ─── */
 
 export function FeaturesSection() {
   const { containerRef, progress } = useScrollProgress()
   const activeIndex = Math.min(3, Math.floor(progress * 4))
+  const isLandscape = useIsLandscape()
 
   return (
     <section ref={containerRef} className="relative" style={{ height: "400svh" }}>
-      {/* Sticky container — full viewport, all devices */}
+      {/* Sticky container */}
       <div className="sticky top-0 h-[100svh] flex flex-col overflow-hidden">
         {/* Background glow */}
         <div className="absolute inset-0 pointer-events-none" style={{ opacity: 0.15 }}>
@@ -503,7 +550,7 @@ export function FeaturesSection() {
           />
         </div>
 
-        {/* Header area */}
+        {/* Header */}
         <div className="relative shrink-0 pt-20 lg:pt-24 pb-2 lg:pb-4 px-5 sm:px-6 lg:px-8 text-center">
           <h2 className="text-xl sm:text-2xl lg:text-4xl font-bold tracking-tight mb-3">
             <span className="text-white">Conhece o </span>
@@ -511,84 +558,94 @@ export function FeaturesSection() {
               Mirror
             </span>
           </h2>
-          <div className="lg:hidden">
-            <ProgressDots activeIndex={activeIndex} />
-          </div>
+          <ProgressDots activeIndex={activeIndex} />
         </div>
 
-        {/* Content area — fills remaining space */}
+        {/* Content area */}
         <div className="relative flex-1 flex items-center min-h-0 px-5 sm:px-6 lg:px-8 pb-4 lg:pb-12">
-          <div className="mx-auto max-w-7xl w-full">
-            <div className="flex flex-col lg:flex-row items-center gap-5 lg:gap-16">
-              {/* Text — order 2 on mobile (below phone), order 1 on desktop (left) */}
-              <div className="order-2 lg:order-1 flex-1 w-full">
-                {/* Desktop dots — inline with text */}
-                <div className="hidden lg:flex items-center gap-6">
-                  <ProgressDots activeIndex={activeIndex} />
-                  <div className="relative flex-1 max-w-lg min-h-[240px]">
+          <div className="mx-auto max-w-7xl w-full h-full">
+
+            {/* LANDSCAPE MOBILE: icon + text only, no phone */}
+            {isLandscape && (
+              <div className="relative w-full h-full">
+                {features.map((feature, i) => (
+                  <LandscapeFeatureCard key={i} feature={feature} opacity={getFeatureOpacity(progress, i)} />
+                ))}
+              </div>
+            )}
+
+            {/* PORTRAIT + DESKTOP: phone + text */}
+            {!isLandscape && (
+              <div className="flex flex-col lg:flex-row items-center gap-5 lg:gap-16">
+                {/* Text */}
+                <div className="order-2 lg:order-1 flex-1 w-full">
+                  {/* Desktop text */}
+                  <div className="hidden lg:flex items-center gap-6">
+                    <div className="relative flex-1 max-w-lg min-h-[240px]">
+                      {features.map((feature, i) => {
+                        const opacity = getFeatureOpacity(progress, i)
+                        return (
+                          <div
+                            key={i}
+                            className="absolute inset-0 flex flex-col justify-center text-left transition-opacity duration-150"
+                            style={{ opacity, visibility: opacity < 0.1 ? "hidden" : "visible" }}
+                            aria-hidden={opacity < 0.5}
+                          >
+                            <Badge accent={feature.accent}>{feature.badge}</Badge>
+                            <h3 className="text-3xl xl:text-4xl font-bold leading-tight tracking-tight mb-4">
+                              <span className="text-white">{feature.title}</span>
+                            </h3>
+                            <p className="text-base text-white/70 leading-relaxed max-w-md">{feature.description}</p>
+                          </div>
+                        )
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Mobile portrait text */}
+                  <div className="lg:hidden relative w-full min-h-[100px] px-2">
                     {features.map((feature, i) => {
                       const opacity = getFeatureOpacity(progress, i)
                       return (
                         <div
                           key={i}
-                          className="absolute inset-0 flex flex-col justify-center text-left transition-opacity duration-150"
+                          className="absolute inset-0 flex flex-col justify-start text-center transition-opacity duration-150"
                           style={{ opacity, visibility: opacity < 0.1 ? "hidden" : "visible" }}
                           aria-hidden={opacity < 0.5}
                         >
-                          <Badge accent={feature.accent}>{feature.badge}</Badge>
-                          <h3 className="text-3xl xl:text-4xl font-bold leading-tight tracking-tight mb-4">
+                          <span className="inline-block mx-auto mb-2 px-3 py-1 text-[11px] font-semibold uppercase tracking-widest rounded-full bg-white/5 border border-white/10" style={{ color: feature.accent }}>{feature.badge}</span>
+                          <h3 className="text-base sm:text-lg font-bold leading-snug tracking-tight mb-1.5">
                             <span className="text-white">{feature.title}</span>
                           </h3>
-                          <p className="text-base text-white/70 leading-relaxed max-w-md">{feature.description}</p>
+                          <p className="text-sm text-white/70 leading-relaxed line-clamp-2">{feature.description}</p>
                         </div>
                       )
                     })}
                   </div>
                 </div>
 
-                {/* Mobile text — centered, compact */}
-                <div className="lg:hidden relative w-full min-h-[100px] px-2">
-                  {features.map((feature, i) => {
-                    const opacity = getFeatureOpacity(progress, i)
-                    return (
-                      <div
-                        key={i}
-                        className="absolute inset-0 flex flex-col justify-start text-center transition-opacity duration-150"
-                        style={{ opacity, visibility: opacity < 0.1 ? "hidden" : "visible" }}
-                        aria-hidden={opacity < 0.5}
-                      >
-                        <span className="inline-block mx-auto mb-2 px-3 py-1 text-[11px] font-semibold uppercase tracking-widest rounded-full bg-white/5 border border-white/10" style={{ color: feature.accent }}>{feature.badge}</span>
-                        <h3 className="text-base sm:text-lg font-bold leading-snug tracking-tight mb-1.5">
-                          <span className="text-white">{feature.title}</span>
-                        </h3>
-                        <p className="text-sm text-white/70 leading-relaxed line-clamp-2">{feature.description}</p>
-                      </div>
-                    )
-                  })}
+                {/* Phone */}
+                <div className="order-1 lg:order-2 w-[42%] sm:w-[38%] lg:w-[280px] max-w-[170px] lg:max-w-[280px] shrink-0">
+                  <PhoneMockup>
+                    <div className="relative w-full h-full">
+                      {features.map((feature, i) => {
+                        const opacity = getFeatureOpacity(progress, i)
+                        return (
+                          <div
+                            key={i}
+                            className="absolute inset-0 transition-opacity duration-150"
+                            style={{ opacity, visibility: opacity < 0.1 ? "hidden" : "visible" }}
+                            aria-hidden={opacity < 0.5}
+                          >
+                            {feature.screen}
+                          </div>
+                        )
+                      })}
+                    </div>
+                  </PhoneMockup>
                 </div>
               </div>
-
-              {/* Phone — ONE instance, order 1 on mobile (top), order 2 on desktop (right) */}
-              <div className="order-1 lg:order-2 w-[42%] sm:w-[38%] lg:w-[280px] max-w-[170px] lg:max-w-[280px] shrink-0">
-                <PhoneMockup>
-                  <div className="relative w-full h-full">
-                    {features.map((feature, i) => {
-                      const opacity = getFeatureOpacity(progress, i)
-                      return (
-                        <div
-                          key={i}
-                          className="absolute inset-0 transition-opacity duration-150"
-                          style={{ opacity, visibility: opacity < 0.1 ? "hidden" : "visible" }}
-                          aria-hidden={opacity < 0.5}
-                        >
-                          {feature.screen}
-                        </div>
-                      )
-                    })}
-                  </div>
-                </PhoneMockup>
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
