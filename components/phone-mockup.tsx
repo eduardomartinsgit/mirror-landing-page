@@ -8,7 +8,7 @@ interface PhoneMockupProps {
 
 export function PhoneMockup({ children, className }: PhoneMockupProps) {
   return (
-    <div className={cn("relative mx-auto", className)} role="img" aria-label="Simulação da aplicação Mirror" style={{ width: "min(280px, 70vw)", height: "min(580px, 145vw)" }}>
+    <div className={cn("relative mx-auto", className)} role="img" aria-label="Simulação da aplicação Mirror" style={{ width: "min(240px, 60vw)", height: "min(500px, 65dvh)" }}>
       {/* Outer glow */}
       <div className="absolute -inset-2 rounded-[3rem] bg-gradient-to-b from-[#E91E8C]/30 to-[#00D4FF]/30 blur-xl opacity-60" />
 
