@@ -515,7 +515,7 @@ export function FeaturesSection() {
   const activeIndex = Math.min(3, Math.floor(progress * 4))
 
   return (
-    <section ref={containerRef} className="relative" style={{ height: "400vh" }}>
+    <section ref={containerRef} className="relative h-[300svh] lg:h-[400vh]">
       {/* Section heading */}
       <div className="relative z-10 pt-20 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
         <ScrollReveal animation="fade-up">
@@ -549,13 +549,13 @@ export function FeaturesSection() {
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
-          <div className="flex flex-col-reverse lg:flex-row items-center gap-8 lg:gap-16">
+          <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-16">
             {/* Left side: progress dots + text */}
             <div className="flex-1 flex flex-col lg:flex-row items-center lg:items-start">
               <ProgressDots activeIndex={activeIndex} />
 
               {/* Stacked text layers */}
-              <div className="relative w-full max-w-xl min-h-[280px]">
+              <div className="relative w-full max-w-xl min-h-[200px] lg:min-h-[280px]">
                 {features.map((feature, i) => {
                   const opacity = getFeatureOpacity(progress, i)
                   return (
@@ -584,7 +584,7 @@ export function FeaturesSection() {
             </div>
 
             {/* Right side: phone mockup with cross-fading screens */}
-            <div className="flex-1 flex justify-center">
+            <div className="flex-1 flex justify-center w-full max-w-[200px] lg:max-w-none mx-auto">
               <PhoneMockup>
                 <div className="relative w-full h-full">
                   {features.map((feature, i) => {
