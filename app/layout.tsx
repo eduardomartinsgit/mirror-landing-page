@@ -21,7 +21,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: 'Mirror - O teu diário com inteligência artificial',
   description: 'Reflete sobre os teus pensamentos e emoções com o Mirror. Recebe insights personalizados e cresce no autoconhecimento com IA. Feito em Portugal.',
-  manifest: '/manifest.json',
+  manifest: '/mirror-landing-page/manifest.json',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',

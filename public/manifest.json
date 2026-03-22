@@ -1,0 +1,22 @@
+{
+  "name": "Mirror",
+  "short_name": "Mirror",
+  "description": "O teu diário com inteligência artificial",
+  "start_url": "/mirror-landing-page/",
+  "scope": "/mirror-landing-page/",
+  "display": "standalone",
+  "background_color": "#0D0B14",
+  "theme_color": "#0D0B14",
+  "icons": [
+    {
+      "src": "/mirror-landing-page/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/mirror-landing-page/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

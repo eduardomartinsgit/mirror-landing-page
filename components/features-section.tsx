@@ -506,6 +506,43 @@ function ProgressDots({ activeIndex }: { activeIndex: number }) {
   )
 }
 
+/* ─── mobile feature card ─── */
+
+function MobileFeatureCard({ feature, index }: { feature: Feature; index: number }) {
+  return (
+    <ScrollReveal animation="fade-up" delay={index * 100}>
+      <div className="relative rounded-3xl bg-card/40 backdrop-blur-sm border border-border/30 p-6 overflow-hidden">
+        {/* Background glow */}
+        <div
+          className="absolute -top-20 -right-20 w-40 h-40 rounded-full blur-[80px] opacity-20 pointer-events-none"
+          style={{ backgroundColor: feature.accent }}
+        />
+
+        <div className="relative">
+          <Badge accent={feature.accent}>{feature.badge}</Badge>
+
+          <h3 className="text-xl font-bold leading-tight tracking-tight mb-3">
+            <span className="bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
+              {feature.title}
+            </span>
+          </h3>
+
+          <p className="text-sm text-white/70 leading-relaxed mb-6">
+            {feature.description}
+          </p>
+
+          {/* Phone mockup centered */}
+          <div className="flex justify-center">
+            <PhoneMockup className="max-w-[180px]">
+              {feature.screen}
+            </PhoneMockup>
+          </div>
+        </div>
+      </div>
+    </ScrollReveal>
+  )
+}
+
 /* ─── main export ─── */
 
 export function FeaturesSection() {
@@ -515,9 +552,9 @@ export function FeaturesSection() {
   const activeIndex = Math.min(3, Math.floor(progress * 4))
 
   return (
-    <section ref={containerRef} className="relative h-[300svh] lg:h-[400vh]">
+    <>
       {/* Section heading */}
-      <div className="relative z-10 pt-20 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
+      <div className="pt-20 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
         <ScrollReveal animation="fade-up">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
             <span className="text-white">Conhece o </span>
@@ -526,89 +563,99 @@ export function FeaturesSection() {
             </span>
           </h2>
           <p className="text-base sm:text-lg text-white/70 max-w-xl mx-auto">
-            Navega pelas funcionalidades do MVP enquanto fazes scroll.
+            Descobre as funcionalidades que vão transformar a tua relação contigo.
           </p>
         </ScrollReveal>
       </div>
 
-      {/* Sticky container */}
-      <div className="sticky top-0 h-dvh flex items-center overflow-hidden">
-        {/* Background glow based on active feature */}
-        <div
-          className="absolute inset-0 pointer-events-none transition-opacity duration-700"
-          style={{ opacity: 0.15 }}
-        >
+      {/* MOBILE: stacked cards (visible below lg) */}
+      <div className="lg:hidden px-4 sm:px-6 space-y-8 pb-16 max-w-lg mx-auto">
+        {features.map((feature, i) => (
+          <MobileFeatureCard key={i} feature={feature} index={i} />
+        ))}
+      </div>
+
+      {/* DESKTOP: sticky scroll experience (visible lg and above) */}
+      <section ref={containerRef} className="relative hidden lg:block" style={{ height: "400vh" }}>
+        {/* Sticky container */}
+        <div className="sticky top-0 h-dvh flex items-center overflow-hidden">
+          {/* Background glow based on active feature */}
           <div
-            className="absolute top-1/4 -right-40 w-80 h-80 rounded-full blur-[120px] transition-colors duration-700"
-            style={{ backgroundColor: features[activeIndex].accent }}
-          />
-          <div
-            className="absolute bottom-1/4 -left-40 w-60 h-60 rounded-full blur-[100px] transition-colors duration-700"
-            style={{ backgroundColor: features[activeIndex === 0 ? 2 : activeIndex - 1]?.accent || "#7B2FBF" }}
-          />
-        </div>
+            className="absolute inset-0 pointer-events-none transition-opacity duration-700"
+            style={{ opacity: 0.15 }}
+          >
+            <div
+              className="absolute top-1/4 -right-40 w-80 h-80 rounded-full blur-[120px] transition-colors duration-700"
+              style={{ backgroundColor: features[activeIndex].accent }}
+            />
+            <div
+              className="absolute bottom-1/4 -left-40 w-60 h-60 rounded-full blur-[100px] transition-colors duration-700"
+              style={{ backgroundColor: features[activeIndex === 0 ? 2 : activeIndex - 1]?.accent || "#7B2FBF" }}
+            />
+          </div>
 
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
-          <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-16">
-            {/* Left side: progress dots + text */}
-            <div className="flex-1 flex flex-col lg:flex-row items-center lg:items-start">
-              <ProgressDots activeIndex={activeIndex} />
+          <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
+            <div className="flex flex-row items-center gap-16">
+              {/* Left side: progress dots + text */}
+              <div className="flex-1 flex flex-row items-start">
+                <ProgressDots activeIndex={activeIndex} />
 
-              {/* Stacked text layers */}
-              <div className="relative w-full max-w-xl min-h-[200px] lg:min-h-[280px]">
-                {features.map((feature, i) => {
-                  const opacity = getFeatureOpacity(progress, i)
-                  return (
-                    <div
-                      key={i}
-                      className="absolute inset-0 flex flex-col justify-center transition-opacity duration-100 text-center lg:text-left"
-                      style={{
-                        opacity,
-                        visibility: opacity < 0.1 ? "hidden" : "visible",
-                      }}
-                      aria-hidden={opacity < 0.5}
-                    >
-                      <Badge accent={feature.accent}>{feature.badge}</Badge>
-                      <h3 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight tracking-tight mb-4 lg:mb-6">
-                        <span className="bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
-                          {feature.title}
-                        </span>
-                      </h3>
-                      <p className="text-base sm:text-lg text-white/70 leading-relaxed">
-                        {feature.description}
-                      </p>
-                    </div>
-                  )
-                })}
-              </div>
-            </div>
-
-            {/* Right side: phone mockup with cross-fading screens */}
-            <div className="flex-1 flex justify-center w-full max-w-[200px] lg:max-w-none mx-auto">
-              <PhoneMockup>
-                <div className="relative w-full h-full">
+                {/* Stacked text layers */}
+                <div className="relative w-full max-w-xl min-h-[280px]">
                   {features.map((feature, i) => {
                     const opacity = getFeatureOpacity(progress, i)
                     return (
                       <div
                         key={i}
-                        className="absolute inset-0 transition-opacity duration-100"
+                        className="absolute inset-0 flex flex-col justify-center text-left transition-opacity duration-100"
                         style={{
                           opacity,
                           visibility: opacity < 0.1 ? "hidden" : "visible",
                         }}
                         aria-hidden={opacity < 0.5}
                       >
-                        {feature.screen}
+                        <Badge accent={feature.accent}>{feature.badge}</Badge>
+                        <h3 className="text-4xl xl:text-5xl font-bold leading-tight tracking-tight mb-6">
+                          <span className="bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
+                            {feature.title}
+                          </span>
+                        </h3>
+                        <p className="text-lg text-white/70 leading-relaxed">
+                          {feature.description}
+                        </p>
                       </div>
                     )
                   })}
                 </div>
-              </PhoneMockup>
+              </div>
+
+              {/* Right side: phone mockup with cross-fading screens */}
+              <div className="flex-1 flex justify-center">
+                <PhoneMockup>
+                  <div className="relative w-full h-full">
+                    {features.map((feature, i) => {
+                      const opacity = getFeatureOpacity(progress, i)
+                      return (
+                        <div
+                          key={i}
+                          className="absolute inset-0 transition-opacity duration-100"
+                          style={{
+                            opacity,
+                            visibility: opacity < 0.1 ? "hidden" : "visible",
+                          }}
+                          aria-hidden={opacity < 0.5}
+                        >
+                          {feature.screen}
+                        </div>
+                      )
+                    })}
+                  </div>
+                </PhoneMockup>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   )
 }
