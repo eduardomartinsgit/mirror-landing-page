@@ -532,7 +532,7 @@ export function FeaturesSection() {
       </div>
 
       {/* Sticky container */}
-      <div className="sticky top-0 h-screen flex items-center overflow-hidden">
+      <div className="sticky top-0 h-dvh flex items-center overflow-hidden">
         {/* Background glow based on active feature */}
         <div
           className="absolute inset-0 pointer-events-none transition-opacity duration-700"
