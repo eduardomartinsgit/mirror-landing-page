@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { ScrollReveal } from "@/components/scroll-reveal"
 import { useScrollReveal } from "@/hooks/use-scroll-reveal"
+import { useLanguage } from "@/lib/i18n/context"
 
 function useCounter(end: number, duration: number = 2000, isVisible: boolean) {
   const [count, setCount] = useState(0)
@@ -75,39 +76,18 @@ function StatItem({ value, suffix, description, source, sourceUrl, delay, isVisi
   )
 }
 
-const stats = [
-  {
-    value: 49,
-    suffix: ",8%",
-    description: "dos jovens 18-24 com sintomas de perturbação mental",
-    source: "INE/INSA — Inquérito Nacional de Saúde, 2024",
-    sourceUrl: "https://www.ine.pt/xportal/xmain?xpid=INE&xpgid=ine_publicacoes&PUBLICACOESpub_boui=544926561&PUBLICACOESmodo=2",
-  },
-  {
-    value: 300,
-    suffix: " dias",
-    description: "de espera no SNS para consulta de psicologia",
-    source: "Ordem dos Psicólogos Portugueses, 2024",
-    sourceUrl: "https://www.ordemdospsicologos.pt/pt/noticia/4467",
-  },
-  {
-    value: 50,
-    suffix: "%",
-    description: "dos portugueses em stress elevado",
-    source: "Eurobarómetro 529 — Comissão Europeia, 2023",
-    sourceUrl: "https://europa.eu/eurobarometer/surveys/detail/2955",
-  },
-  {
-    value: 25,
-    suffix: "×",
-    description: "mais acessível que uma consulta privada",
-    source: "Mirror €5,99/mês vs. ~€150/consulta (OPP, 2024)",
-    sourceUrl: "https://www.ordemdospsicologos.pt/pt",
-  },
+const statValues = [49, 300, 50, 25]
+const sourceUrls = [
+  "https://www.ine.pt/xportal/xmain?xpid=INE&xpgid=ine_publicacoes&PUBLICACOESpub_boui=544926561&PUBLICACOESmodo=2",
+  "https://www.ordemdospsicologos.pt/pt/noticia/4467",
+  "https://europa.eu/eurobarometer/surveys/detail/2955",
+  "https://www.ordemdospsicologos.pt/pt",
 ]
 
 export function StatsSection() {
   const { ref, isVisible } = useScrollReveal({ threshold: 0.1 })
+  const { t, ta } = useLanguage()
+  const items = ta<{ suffix: string; description: string; source: string }>("stats.items")
 
   return (
     <section
@@ -122,7 +102,7 @@ export function StatsSection() {
         {/* Heading */}
         <ScrollReveal animation="fade-up" className="mx-auto max-w-3xl text-center">
           <h2 className="font-serif text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
-            Portugal precisa do{" "}
+            {t("stats.titleBefore")}
             <span
               style={{
                 background: "linear-gradient(135deg, #E91E8C, #7B2FBF, #00D4FF)",
@@ -131,11 +111,11 @@ export function StatsSection() {
                 backgroundClip: "text",
               }}
             >
-              Mirror
+              {t("stats.titleHighlight")}
             </span>
           </h2>
           <p className="mt-6 text-base leading-relaxed text-white/70 sm:text-lg">
-            O SNS não dá conta. 22% dos portugueses vivem com perturbações de saúde mental. É mais do que a média europeia.
+            {t("stats.subtitle")}
           </p>
           <a
             href="https://www.cambridge.org/core/journals/the-british-journal-of-psychiatry/article/epidemiology-of-mental-disorders-in-portugal/3DC9E0C9B6D4E0C1A5D5B8F2E1A3C5D7"
@@ -143,23 +123,23 @@ export function StatsSection() {
             rel="noopener noreferrer"
             className="inline-block mt-2 text-xs text-[#00D4FF]/70 italic hover:text-[#00D4FF]/90 transition-colors underline underline-offset-2"
           >
-            Fonte: World Mental Health Survey — Harvard Medical School / NOVA Medical School, 2023
+            {t("stats.source")}
           </a>
         </ScrollReveal>
 
         {/* Stats grid */}
         <div className="mt-16 grid grid-cols-1 gap-y-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-y-0">
-          {stats.map((stat, i) => (
+          {items.map((item, i) => (
             <StatItem
-              key={stat.suffix}
-              value={stat.value}
-              suffix={stat.suffix}
-              description={stat.description}
-              source={stat.source}
-              sourceUrl={stat.sourceUrl}
+              key={i}
+              value={statValues[i]}
+              suffix={item.suffix}
+              description={item.description}
+              source={item.source}
+              sourceUrl={sourceUrls[i]}
               delay={200 + i * 150}
               isVisible={isVisible}
-              isLast={i === stats.length - 1}
+              isLast={i === items.length - 1}
             />
           ))}
         </div>

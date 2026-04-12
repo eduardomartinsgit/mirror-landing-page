@@ -6,15 +6,18 @@ import { Menu } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet"
 import { Logo } from "@/components/logo"
-
-const navLinks = [
-  { href: "#funcionalidades", label: "Funcionalidades" },
-  { href: "#precos", label: "Planos" },
-  { href: "#faq", label: "FAQ" },
-]
+import { LanguageSelector } from "@/components/language-selector"
+import { useLanguage } from "@/lib/i18n/context"
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false)
+  const { t } = useLanguage()
+
+  const navLinks = [
+    { href: "#funcionalidades", label: t("header.nav.features") },
+    { href: "#precos", label: t("header.nav.plans") },
+    { href: "#faq", label: t("header.nav.faq") },
+  ]
 
   const scrollToForm = () => {
     const form = document.getElementById('lead-form')
@@ -47,47 +50,51 @@ export function Header() {
             ))}
           </nav>
 
-          {/* Desktop CTA */}
-          <div className="hidden md:flex items-center">
+          {/* Desktop CTA + Language */}
+          <div className="hidden md:flex items-center gap-3">
+            <LanguageSelector />
             <Button
               onClick={scrollToForm}
               className="relative overflow-hidden bg-gradient-to-r from-[#E91E8C] to-[#00D4FF] hover:opacity-90 transition-opacity text-white font-semibold px-6"
             >
-              Quero Participar
+              {t("header.cta")}
             </Button>
           </div>
 
-          {/* Mobile Menu */}
-          <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild className="md:hidden">
-              <Button variant="ghost" size="icon" className="text-foreground">
-                <Menu className="h-6 w-6" />
-                <span className="sr-only">Abrir menu</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="w-full sm:w-80 bg-background border-border">
-              <div className="flex flex-col gap-8 mt-8">
-                <nav className="flex flex-col gap-4">
-                  {navLinks.map((link) => (
-                    <SheetClose asChild key={link.href}>
-                      <Link
-                        href={link.href}
-                        className="text-lg font-medium text-muted-foreground hover:text-foreground transition-colors py-2"
-                      >
-                        {link.label}
-                      </Link>
-                    </SheetClose>
-                  ))}
-                </nav>
-                <Button
-                  onClick={scrollToForm}
-                  className="w-full bg-gradient-to-r from-[#E91E8C] to-[#00D4FF] hover:opacity-90 transition-opacity text-white font-semibold"
-                >
-                  Quero Participar
+          {/* Mobile: Language + Menu */}
+          <div className="flex md:hidden items-center gap-2">
+            <LanguageSelector />
+            <Sheet open={isOpen} onOpenChange={setIsOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="text-foreground">
+                  <Menu className="h-6 w-6" />
+                  <span className="sr-only">{t("header.openMenu")}</span>
                 </Button>
-              </div>
-            </SheetContent>
-          </Sheet>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-full sm:w-80 bg-background border-border">
+                <div className="flex flex-col gap-8 mt-8">
+                  <nav className="flex flex-col gap-4">
+                    {navLinks.map((link) => (
+                      <SheetClose asChild key={link.href}>
+                        <Link
+                          href={link.href}
+                          className="text-lg font-medium text-muted-foreground hover:text-foreground transition-colors py-2"
+                        >
+                          {link.label}
+                        </Link>
+                      </SheetClose>
+                    ))}
+                  </nav>
+                  <Button
+                    onClick={scrollToForm}
+                    className="w-full bg-gradient-to-r from-[#E91E8C] to-[#00D4FF] hover:opacity-90 transition-opacity text-white font-semibold"
+                  >
+                    {t("header.cta")}
+                  </Button>
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
         </div>
       </div>
     </header>

@@ -1,24 +1,9 @@
+"use client"
+
 import Link from "next/link"
 import { Instagram, Twitter, Linkedin, Mail } from "lucide-react"
 import { Logo } from "@/components/logo"
-
-const footerLinks = {
-  produto: [
-    { label: "Funcionalidades", href: "#funcionalidades" },
-    { label: "Planos", href: "#precos" },
-    { label: "FAQ", href: "#faq" },
-  ],
-  empresa: [
-    { label: "Sobre nós", href: "#" },
-    { label: "Blog", href: "#" },
-    { label: "Contacto", href: "#" },
-  ],
-  legal: [
-    { label: "Privacidade", href: "#" },
-    { label: "Termos de utilização", href: "#" },
-    { label: "RGPD", href: "#" },
-  ],
-}
+import { useLanguage } from "@/lib/i18n/context"
 
 const socialLinks = [
   { icon: Instagram, href: "#", label: "Instagram" },
@@ -28,6 +13,11 @@ const socialLinks = [
 ]
 
 export function Footer() {
+  const { t, ta } = useLanguage()
+  const productLinks = ta<{ label: string; href: string }>("footer.productLinks")
+  const companyLinks = ta<{ label: string; href: string }>("footer.companyLinks")
+  const legalLinks = ta<{ label: string; href: string }>("footer.legalLinks")
+
   return (
     <footer className="relative bg-card/50 backdrop-blur-sm border-t border-border/50 py-16">
       {/* Gradient line at top */}
@@ -41,7 +31,7 @@ export function Footer() {
               <Logo />
             </Link>
             <p className="text-muted-foreground max-w-xs mb-6 leading-relaxed">
-              O teu diário de voz com IA. Para te conheceres melhor, um dia de cada vez.
+              {t("footer.brandDescription")}
             </p>
             <div className="flex gap-3">
               {socialLinks.map((social) => (
@@ -59,10 +49,10 @@ export function Footer() {
 
           {/* Links */}
           <div>
-            <h4 className="font-semibold mb-4 text-foreground">Produto</h4>
+            <h4 className="font-semibold mb-4 text-foreground">{t("footer.product")}</h4>
             <ul className="space-y-3">
-              {footerLinks.produto.map((link) => (
-                <li key={link.label}>
+              {productLinks.map((link, i) => (
+                <li key={i}>
                   <Link
                     href={link.href}
                     className="text-muted-foreground hover:text-[#E91E8C] transition-colors focus-visible:ring-2 focus-visible:ring-[#E91E8C]/50 focus-visible:outline-none rounded"
@@ -75,10 +65,10 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-semibold mb-4 text-foreground">Empresa</h4>
+            <h4 className="font-semibold mb-4 text-foreground">{t("footer.company")}</h4>
             <ul className="space-y-3">
-              {footerLinks.empresa.map((link) => (
-                <li key={link.label}>
+              {companyLinks.map((link, i) => (
+                <li key={i}>
                   <Link
                     href={link.href}
                     className="text-muted-foreground hover:text-[#E91E8C] transition-colors focus-visible:ring-2 focus-visible:ring-[#E91E8C]/50 focus-visible:outline-none rounded"
@@ -91,10 +81,10 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-semibold mb-4 text-foreground">Legal</h4>
+            <h4 className="font-semibold mb-4 text-foreground">{t("footer.legal")}</h4>
             <ul className="space-y-3">
-              {footerLinks.legal.map((link) => (
-                <li key={link.label}>
+              {legalLinks.map((link, i) => (
+                <li key={i}>
                   <Link
                     href={link.href}
                     className="text-muted-foreground hover:text-[#E91E8C] transition-colors focus-visible:ring-2 focus-visible:ring-[#E91E8C]/50 focus-visible:outline-none rounded"
@@ -111,10 +101,10 @@ export function Footer() {
         <div className="pt-8 border-t border-border/50">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-muted-foreground text-sm">
-              {new Date().getFullYear()} Mirror. Todos os direitos reservados.
+              {new Date().getFullYear()} Mirror. {t("footer.copyright")}
             </p>
             <p className="text-muted-foreground text-sm">
-              Feito com <span className="text-[#E91E8C]">&#9829;</span> em Portugal
+              {t("footer.madeWith")} <span className="text-[#E91E8C]">&#9829;</span> {t("footer.madeIn")}
             </p>
           </div>
         </div>

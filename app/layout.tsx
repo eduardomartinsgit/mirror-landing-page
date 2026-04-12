@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { GeoGate } from '@/components/geo-gate'
+import { LanguageProvider } from '@/lib/i18n/context'
 import { Inter, Space_Grotesk, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 
@@ -45,9 +46,11 @@ export default function RootLayout({
   return (
     <html lang="pt-PT">
       <body className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans antialiased`}>
-        <GeoGate>
-          {children}
-        </GeoGate>
+        <LanguageProvider>
+          <GeoGate>
+            {children}
+          </GeoGate>
+        </LanguageProvider>
       </body>
     </html>
   )

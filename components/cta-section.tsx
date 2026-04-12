@@ -2,8 +2,11 @@
 
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Sparkles } from "lucide-react"
+import { useLanguage } from "@/lib/i18n/context"
 
 export function CtaSection() {
+  const { t } = useLanguage()
+
   const scrollToForm = () => {
     const form = document.getElementById('lead-form')
     if (form) {
@@ -34,14 +37,14 @@ export function CtaSection() {
           <div className="relative p-8 sm:p-12 lg:p-16 text-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 text-white text-sm font-medium mb-6 backdrop-blur-sm border border-white/20">
               <Sparkles className="h-4 w-4" />
-              <span>Lançamento em breve</span>
+              <span>{t("cta.badge")}</span>
             </div>
 
             <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 text-balance">
-              Começa a cuidar de ti.
+              {t("cta.title")}
             </h2>
             <p className="text-lg text-white/90 max-w-2xl mx-auto mb-8">
-              Entra na lista de espera. Sê dos primeiros a usar o Mirror quando sair.
+              {t("cta.subtitle")}
             </p>
 
             <Button
@@ -49,12 +52,12 @@ export function CtaSection() {
               size="lg"
               className="bg-white text-[#E91E8C] hover:bg-white/90 font-semibold px-8 h-14 text-base gap-2 rounded-xl shadow-lg shadow-black/20"
             >
-              Quero experimentar
+              {t("cta.button")}
               <ArrowRight className="h-5 w-5" />
             </Button>
 
             <p className="mt-6 text-sm text-white/70">
-              Sem compromisso. Sais quando quiseres.
+              {t("cta.disclaimer")}
             </p>
           </div>
         </div>

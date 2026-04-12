@@ -9,8 +9,10 @@ import { Spinner } from "@/components/ui/spinner"
 import { Check, Heart, ArrowRight, Shield, Users, AlertCircle } from "lucide-react"
 import { PrivacyPolicyModal } from "@/components/privacy-policy-modal"
 import { supabase } from "@/lib/supabase"
+import { useLanguage } from "@/lib/i18n/context"
 
 export function LeadForm() {
+  const { t } = useLanguage()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -26,20 +28,20 @@ export function LeadForm() {
   const validateEmail = useCallback((email: string): string | undefined => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!email || !emailRegex.test(email)) {
-      return "Por favor, introduz um endereço de e-mail válido."
+      return t("leadForm.errorEmail")
     }
     return undefined
-  }, [])
+  }, [t])
 
   const validatePhone = useCallback((phone: string): string | undefined => {
     if (!phone.trim()) return undefined // phone is optional
     const stripped = phone.replace(/[\s\-]/g, "")
     const ptPhoneRegex = /^(?:\+?351)?[92]\d{8}$/
     if (!ptPhoneRegex.test(stripped)) {
-      return "Por favor, introduz um número de telefone português válido (ex: +351 912 345 678)."
+      return t("leadForm.errorPhone")
     }
     return undefined
-  }, [])
+  }, [t])
 
   const handleBlur = useCallback((field: "email" | "phone") => {
     const value = formData[field]
@@ -74,7 +76,7 @@ export function LeadForm() {
       setIsSubmitted(true)
     } catch (err) {
       console.error('Lead submission failed:', err)
-      setError('Ocorreu um erro ao submeter. Por favor, tenta novamente.')
+      setError(t("leadForm.errorSubmit"))
     } finally {
       setIsSubmitting(false)
     }
@@ -94,17 +96,16 @@ export function LeadForm() {
           </div>
 
           <h3 className="text-2xl sm:text-3xl font-serif font-bold mb-4 gradient-text">
-            Estás dentro!
+            {t("leadForm.successTitle")}
           </h3>
 
           <p className="text-muted-foreground mb-8 leading-relaxed">
-            Boa, <span className="text-foreground font-medium">{formData.name.split(' ')[0]}</span>!
-            Vamos avisar-te assim que o Mirror estiver pronto. Fica atento ao e-mail.
+            {t("leadForm.successMessageBefore")}<span className="text-foreground font-medium">{formData.name.split(' ')[0]}</span>{t("leadForm.successMessageAfter")}
           </p>
 
           <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground bg-card/50 rounded-xl py-3 px-4">
             <Heart className="w-4 h-4 text-[#E91E8C] animate-pulse" />
-            <span>Tu cuidas de ti. Nós tratamos do resto.</span>
+            <span>{t("leadForm.successFooter")}</span>
           </div>
         </div>
       </div>
@@ -129,22 +130,22 @@ export function LeadForm() {
           </div>
 
           <h3 className="text-xl sm:text-2xl font-serif font-bold mb-2 text-foreground">
-            Entra na lista
+            {t("leadForm.title")}
           </h3>
           <p className="text-sm text-muted-foreground">
-            Sê dos primeiros a experimentar o Mirror.
+            {t("leadForm.subtitle")}
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div className="space-y-2">
             <Label htmlFor="name" className="text-sm font-medium text-foreground">
-              Nome completo
+              {t("leadForm.nameLabel")}
             </Label>
             <Input
               id="name"
               type="text"
-              placeholder="O teu nome"
+              placeholder={t("leadForm.namePlaceholder")}
               required
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -154,12 +155,12 @@ export function LeadForm() {
 
           <div className="space-y-2">
             <Label htmlFor="email" className="text-sm font-medium text-foreground">
-              E-mail
+              {t("leadForm.emailLabel")}
             </Label>
             <Input
               id="email"
               type="email"
-              placeholder="email@exemplo.pt"
+              placeholder={t("leadForm.emailPlaceholder")}
               required
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -173,12 +174,12 @@ export function LeadForm() {
 
           <div className="space-y-2">
             <Label htmlFor="phone" className="text-sm font-medium text-foreground">
-              Telemóvel <span className="text-muted-foreground font-normal">(opcional)</span>
+              {t("leadForm.phoneLabel")} <span className="text-muted-foreground font-normal">{t("leadForm.phoneOptional")}</span>
             </Label>
             <Input
               id="phone"
               type="tel"
-              placeholder="+351 912 345 678"
+              placeholder={t("leadForm.phonePlaceholder")}
               value={formData.phone}
               onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
               onBlur={() => handleBlur("phone")}
@@ -198,13 +199,13 @@ export function LeadForm() {
               className="mt-0.5 border-border/50 data-[state=checked]:bg-[#E91E8C] data-[state=checked]:border-[#E91E8C]"
             />
             <Label htmlFor="consent" className="text-sm text-muted-foreground leading-relaxed cursor-pointer">
-              Li e aceito a{" "}
+              {t("leadForm.consentBefore")}
               <button
                 type="button"
                 onClick={() => setPrivacyModalOpen(true)}
                 className="text-[#00D4FF] underline underline-offset-2 hover:text-[#00D4FF]/80 transition-colors"
               >
-                política de privacidade
+                {t("leadForm.consentLink")}
               </button>
             </Label>
           </div>
@@ -226,7 +227,7 @@ export function LeadForm() {
               <Spinner className="w-5 h-5" />
             ) : (
               <>
-                Quero entrar
+                {t("leadForm.submit")}
                 <ArrowRight className="w-5 h-5 ml-2" />
               </>
             )}
@@ -237,11 +238,11 @@ export function LeadForm() {
         <div className="flex items-center justify-center gap-6 mt-6 pt-6 border-t border-border/30">
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
             <Shield className="w-4 h-4 text-[#00D4FF]" />
-            <span>Dados protegidos (RGPD)</span>
+            <span>{t("leadForm.badgeGdpr")}</span>
           </div>
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
             <Users className="w-4 h-4 text-[#E91E8C]" />
-            <span>+500 interessados</span>
+            <span>{t("leadForm.badgeInterested")}</span>
           </div>
         </div>
       </div>

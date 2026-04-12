@@ -2,12 +2,14 @@
 
 import { useState } from "react"
 import { Logo } from "@/components/logo"
+import { useLanguage } from "@/lib/i18n/context"
 
 interface GeoBlockProps {
   onClose?: () => void
 }
 
 export function GeoBlock({ onClose }: GeoBlockProps) {
+  const { t } = useLanguage()
   const [email, setEmail] = useState("")
   const [submitted, setSubmitted] = useState(false)
 
@@ -42,20 +44,20 @@ export function GeoBlock({ onClose }: GeoBlockProps) {
         {/* Portuguese message */}
         <div className="space-y-3">
           <h1 className="text-2xl sm:text-3xl font-serif font-bold bg-gradient-to-r from-[#E91E8C] to-[#00D4FF] bg-clip-text text-transparent">
-            O Mirror ainda não chegou ao teu país.
+            {t("geoBlock.ptTitle")}
           </h1>
           <p className="text-base text-gray-300 leading-relaxed">
-            Estamos a trabalhar nisso. Deixa o teu e-mail e avisamos-te quando chegarmos aí.
+            {t("geoBlock.ptDescription")}
           </p>
         </div>
 
         {/* English message */}
         <div className="space-y-3 opacity-70">
           <h2 className="text-xl sm:text-2xl font-serif font-bold text-white/80">
-            Mirror is not yet available in your country.
+            {t("geoBlock.enTitle")}
           </h2>
           <p className="text-sm text-gray-400 leading-relaxed">
-            We&apos;re working on it. Drop your email and we&apos;ll let you know when we launch in your area.
+            {t("geoBlock.enDescription")}
           </p>
         </div>
 
@@ -65,7 +67,7 @@ export function GeoBlock({ onClose }: GeoBlockProps) {
             <input
               type="email"
               required
-              placeholder="email@exemplo.com"
+              placeholder={t("geoBlock.placeholder")}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="flex-1 h-12 px-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-gray-400 focus:outline-none focus:border-[#E91E8C]/60 focus:ring-1 focus:ring-[#E91E8C]/30 text-base"
@@ -74,23 +76,23 @@ export function GeoBlock({ onClose }: GeoBlockProps) {
               type="submit"
               className="h-12 px-6 rounded-xl bg-gradient-to-r from-[#E91E8C] to-[#00D4FF] text-white font-bold text-sm hover:opacity-90 transition-opacity shrink-0"
             >
-              Avisar-me
+              {t("geoBlock.submit")}
             </button>
           </form>
         ) : (
           <div className="bg-white/5 border border-white/10 rounded-xl px-6 py-4 max-w-md mx-auto">
             <p className="text-[#00D4FF] font-medium">
-              Obrigado! Entraremos em contacto em breve.
+              {t("geoBlock.thanksPt")}
             </p>
             <p className="text-gray-400 text-sm mt-1">
-              Thank you! We&apos;ll be in touch soon.
+              {t("geoBlock.thanksEn")}
             </p>
           </div>
         )}
 
         {/* Country note */}
         <p className="text-xs text-gray-500 mt-6">
-          🇵🇹 Disponível em Portugal / Available in Portugal
+          {t("geoBlock.availableNote")}
         </p>
 
         {/* Optional close button for testing */}
@@ -99,7 +101,7 @@ export function GeoBlock({ onClose }: GeoBlockProps) {
             onClick={onClose}
             className="text-xs text-gray-500 hover:text-gray-300 underline underline-offset-2 transition-colors"
           >
-            Fechar / Close
+            {t("geoBlock.close")}
           </button>
         )}
       </div>
