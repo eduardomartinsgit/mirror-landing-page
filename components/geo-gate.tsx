@@ -16,7 +16,8 @@ export function GeoGate({ children }: { children: React.ReactNode }) {
       .then((res) => res.json())
       .then((data) => {
         clearTimeout(timeout)
-        setStatus(data.country === "PT" ? "allowed" : "blocked")
+        // Brazil is the launch market; Portugal is also served.
+        setStatus(["BR", "PT"].includes(data.country) ? "allowed" : "blocked")
       })
       .catch(() => {
         clearTimeout(timeout)

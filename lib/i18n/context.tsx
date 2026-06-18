@@ -1,12 +1,14 @@
 "use client"
 
 import { createContext, useContext, useState, useCallback, useEffect } from "react"
+import ptBR from "./pt-BR"
 import ptPT from "./pt-PT"
 import enGB from "./en-GB"
 
-type Language = "pt-PT" | "en-GB"
+type Language = "pt-BR" | "pt-PT" | "en-GB"
 
 const translations: Record<Language, Record<string, unknown>> = {
+  "pt-BR": ptBR,
   "pt-PT": ptPT,
   "en-GB": enGB,
 }
@@ -31,7 +33,7 @@ function resolve(obj: Record<string, unknown>, path: string): unknown {
 }
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguageState] = useState<Language>("pt-PT")
+  const [language, setLanguageState] = useState<Language>("pt-BR")
 
   useEffect(() => {
     const saved = localStorage.getItem("mirror-lang") as Language | null

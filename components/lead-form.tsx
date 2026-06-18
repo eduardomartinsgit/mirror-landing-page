@@ -35,9 +35,10 @@ export function LeadForm() {
 
   const validatePhone = useCallback((phone: string): string | undefined => {
     if (!phone.trim()) return undefined // phone is optional
-    const stripped = phone.replace(/[\s\-]/g, "")
-    const ptPhoneRegex = /^(?:\+?351)?[92]\d{8}$/
-    if (!ptPhoneRegex.test(stripped)) {
+    const stripped = phone.replace(/[\s\-()]/g, "")
+    // Brazilian mobile (+55 DDD 9XXXXXXXX); Portuguese numbers kept for the PT market.
+    const phoneRegex = /^(?:\+?55)?\d{2}9\d{8}$|^(?:\+?351)?[92]\d{8}$/
+    if (!phoneRegex.test(stripped)) {
       return t("leadForm.errorPhone")
     }
     return undefined
