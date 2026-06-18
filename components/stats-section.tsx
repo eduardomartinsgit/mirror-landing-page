@@ -76,12 +76,14 @@ function StatItem({ value, suffix, description, source, sourceUrl, delay, isVisi
   )
 }
 
-const statValues = [49, 300, 50, 25]
+// Brazil-first stats (verified Jun 2026). Values pair with the per-locale
+// suffixes: 26 -> "26,8%", 1 -> "1o", 500 -> "500 mil", 10 -> "10x".
+const statValues = [26, 1, 500, 10]
 const sourceUrls = [
-  "https://www.ine.pt/xportal/xmain?xpid=INE&xpgid=ine_publicacoes&PUBLICACOESpub_boui=544926561&PUBLICACOESmodo=2",
-  "https://www.ordemdospsicologos.pt/pt/noticia/4467",
-  "https://europa.eu/eurobarometer/surveys/detail/2955",
-  "https://www.ordemdospsicologos.pt/pt",
+  "https://www.cnnbrasil.com.br/saude/mais-de-26-dos-brasileiros-tem-diagnostico-de-ansiedade-diz-estudo/",
+  "https://jornal.usp.br/atualidades/brasil-e-o-pais-mais-ansioso-do-mundo/",
+  "https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/s/saude-mental",
+  "https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/s/saude-mental",
 ]
 
 export function StatsSection() {

@@ -8,10 +8,11 @@ import { Label } from "@/components/ui/label"
 import { ScrollReveal } from "@/components/scroll-reveal"
 import { useLanguage } from "@/lib/i18n/context"
 
+// BRL launch pricing (see LAUNCH-BR.md monetization strategy). Adjustable.
 const planPrices = [
   { monthlyPrice: 0, yearlyPrice: 0 },
-  { monthlyPrice: 5.99, yearlyPrice: 47.99 },
-  { monthlyPrice: 9.99, yearlyPrice: 79.99 },
+  { monthlyPrice: 24.9, yearlyPrice: 199.9 },
+  { monthlyPrice: 39.9, yearlyPrice: 319.9 },
 ]
 
 const planAccents = ["#E91E8C", "#00D4FF", "#7B2FBF"]
@@ -23,8 +24,8 @@ export function PricingSection() {
   const plans = ta<{ name: string; description: string; features: string[] }>("pricing.plans")
 
   const formatPrice = (price: number) => {
-    if (price === 0) return "\u20ac0"
-    return `\u20ac${price.toFixed(2).replace(".", ",")}`
+    if (price === 0) return "R$ 0"
+    return `R$ ${price.toFixed(2).replace(".", ",")}`
   }
 
   const scrollToForm = () => {
