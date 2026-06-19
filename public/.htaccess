@@ -5,10 +5,19 @@
 # certificado SSL estiver emitido para o dominio. Antes do SSL, ele causa
 # loop/erro. Ative o SSL no cPanel primeiro.
 
-# ---- Forcar HTTPS ----
+# ---- Forcar HTTPS + dominio canonico (non-www) ----
+# Canonico escolhido: usemirror.com.br (sem www). HTTPS e www->non-www num
+# unico redirect 301. Para preferir COM www, comente este bloco e use o
+# bloco alternativo logo abaixo.
 RewriteEngine On
-RewriteCond %{HTTPS} off
-RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} ^www\. [NC]
+RewriteRule ^ https://usemirror.com.br%{REQUEST_URI} [L,R=301]
+
+# ---- Alternativa: forcar COM www (deixe comentado se usar o de cima) ----
+# RewriteCond %{HTTPS} off [OR]
+# RewriteCond %{HTTP_HOST} !^www\. [NC]
+# RewriteRule ^ https://www.usemirror.com.br%{REQUEST_URI} [L,R=301]
 
 # ---- Pagina 404 (gerada pelo Next export) ----
 ErrorDocument 404 /404.html
