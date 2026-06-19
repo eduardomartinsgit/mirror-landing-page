@@ -77,8 +77,8 @@ function StatItem({ value, suffix, description, source, sourceUrl, delay, isVisi
 }
 
 // Brazil-first stats (verified Jun 2026). Values pair with the per-locale
-// suffixes: 26 -> "26,8%", 1 -> "1o", 500 -> "500 mil", 10 -> "10x".
-const statValues = [26, 1, 500, 10]
+// suffixes: 26 -> "26,8%", 1 -> "1o", 472 -> "472 mil", 10 -> "10x".
+const statValues = [26, 1, 472, 10]
 const sourceUrls = [
   "https://www.cnnbrasil.com.br/saude/mais-de-26-dos-brasileiros-tem-diagnostico-de-ansiedade-diz-estudo/",
   "https://jornal.usp.br/atualidades/brasil-e-o-pais-mais-ansioso-do-mundo/",
@@ -120,7 +120,7 @@ export function StatsSection() {
             {t("stats.subtitle")}
           </p>
           <a
-            href="https://www.cambridge.org/core/journals/the-british-journal-of-psychiatry/article/epidemiology-of-mental-disorders-in-portugal/3DC9E0C9B6D4E0C1A5D5B8F2E1A3C5D7"
+            href="https://jornal.usp.br/atualidades/brasil-e-o-pais-mais-ansioso-do-mundo/"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block mt-2 text-xs text-[#00D4FF]/70 italic hover:text-[#00D4FF]/90 transition-colors underline underline-offset-2"
