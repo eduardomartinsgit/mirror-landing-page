@@ -19,6 +19,16 @@ RewriteRule ^ https://usemirror.com.br%{REQUEST_URI} [L,R=301]
 # RewriteCond %{HTTP_HOST} !^www\. [NC]
 # RewriteRule ^ https://www.usemirror.com.br%{REQUEST_URI} [L,R=301]
 
+# ---- URLs limpas: sem barra final e sem .html ----
+Options -MultiViews
+# Remover a barra final (exceto na raiz)
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.+)/$ /$1 [L,R=301]
+# Servir o .html correspondente sem mostrar a extensao
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME}\.html -f
+RewriteRule ^(.+?)/?$ $1.html [L]
+
 # ---- Pagina 404 (gerada pelo Next export) ----
 ErrorDocument 404 /404.html
 
@@ -49,4 +59,8 @@ ErrorDocument 404 /404.html
   </FilesMatch>
   Header set X-Content-Type-Options "nosniff"
   Header set Referrer-Policy "strict-origin-when-cross-origin"
+  # HSTS: so faz efeito sobre HTTPS (ative o SSL antes). Sem "preload" por
+  # enquanto; so adicione preload depois que TODOS os subdominios estiverem
+  # em HTTPS e voce submeter em hstspreload.org (compromisso forte).
+  Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains"
 </IfModule>

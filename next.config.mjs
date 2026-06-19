@@ -8,7 +8,9 @@ const nextConfig = {
   output: 'export',
   basePath: isGhPages ? '/mirror-landing-page' : '',
   assetPrefix: isGhPages ? '/mirror-landing-page/' : undefined,
-  trailingSlash: true,
+  // Sem barra final: gera arquivos .html planos. O .htaccess remove a barra
+  // e serve o .html sem extensao (URLs limpas no Apache/cPanel).
+  trailingSlash: false,
   typescript: {
     ignoreBuildErrors: true,
   },
