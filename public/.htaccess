@@ -20,7 +20,7 @@ RewriteRule ^ https://usemirror.com.br%{REQUEST_URI} [L,R=301]
 # RewriteRule ^ https://www.usemirror.com.br%{REQUEST_URI} [L,R=301]
 
 # ---- URLs limpas: sem barra final e sem .html ----
-Options -MultiViews
+Options -MultiViews -Indexes
 # Remover a barra final (exceto na raiz)
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.+)/$ /$1 [L,R=301]
@@ -63,4 +63,37 @@ ErrorDocument 404 /404.html
   # enquanto; so adicione preload depois que TODOS os subdominios estiverem
   # em HTTPS e voce submeter em hstspreload.org (compromisso forte).
   Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains"
+
+  # ---- Anti-clickjacking + CSP ----
+  Header always set X-Frame-Options "DENY"
+  # CSP montada a partir das dependencias reais do landing:
+  #  - script/style 'unsafe-inline': o Next (export estatico) injeta scripts de
+  #    hidratacao inline e nao ha nonce em build estatico.
+  #  - fontes: next/font self-hospeda (vem de 'self', sem Google Fonts).
+  #  - connect-src: ipapi.co (geo-gate) e *.supabase.co (formulario da lista).
+  # Se adicionar analytics/pixel/iframe no futuro, libere o dominio aqui.
+  # TESTE no DevTools (console mostra violacoes) antes de confiar. Para testar
+  # sem quebrar, troque por Content-Security-Policy-Report-Only.
+  Header always set Content-Security-Policy "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://ipapi.co https://*.supabase.co; upgrade-insecure-requests"
+
+  # ---- Permissions-Policy: desliga tudo que o landing nao usa ----
+  Header always set Permissions-Policy "accelerometer=(), autoplay=(), camera=(), cross-origin-isolated=(), display-capture=(), encrypted-media=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), publickey-credentials-get=(), screen-wake-lock=(), usb=(), web-share=(), browsing-topics=()"
+
+  # ---- Isolamento de origem cruzada (mitiga Spectre; bloqueia hotlink) ----
+  Header always set Cross-Origin-Opener-Policy "same-origin"
+  Header always set Cross-Origin-Resource-Policy "same-origin"
+  # COEP require-corp da isolamento total, mas pode quebrar recursos de
+  # terceiros. Opcional; ative so se precisar de crossOriginIsolated.
+  # Header always set Cross-Origin-Embedder-Policy "require-corp"
+
+  # ---- Extras + esconder tecnologia ----
+  Header always set X-Permitted-Cross-Domain-Policies "none"
+  Header always set X-DNS-Prefetch-Control "off"
+  Header always unset X-Powered-By
+  Header always unset Server
 </IfModule>
+
+# ---- Bloquear arquivos sensiveis (.env, source maps, dotfiles de VCS) ----
+<FilesMatch "(^\.env|\.env\.|\.map$|^\.git|^\.hg|^\.svn)">
+  Require all denied
+</FilesMatch>
