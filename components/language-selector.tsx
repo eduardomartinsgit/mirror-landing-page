@@ -5,7 +5,7 @@ import { useLanguage } from "@/lib/i18n/context"
 const languages = [
   { code: "pt-BR" as const, flag: "\ud83c\udde7\ud83c\uddf7", label: "Portugu\u00eas (BR)" },
   { code: "pt-PT" as const, flag: "\ud83c\uddf5\ud83c\uddf9", label: "Portugu\u00eas (PT)" },
-  { code: "en-GB" as const, flag: "\ud83c\uddec\ud83c\udde7", label: "English" },
+  { code: "en-US" as const, flag: "\ud83c\uddfa\ud83c\uddf8", label: "English" },
 ]
 
 export function LanguageSelector() {

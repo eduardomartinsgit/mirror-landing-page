@@ -3,14 +3,14 @@
 import { createContext, useContext, useState, useCallback, useEffect } from "react"
 import ptBR from "./pt-BR"
 import ptPT from "./pt-PT"
-import enGB from "./en-GB"
+import enUS from "./en-US"
 
-type Language = "pt-BR" | "pt-PT" | "en-GB"
+type Language = "pt-BR" | "pt-PT" | "en-US"
 
 const translations: Record<Language, Record<string, unknown>> = {
   "pt-BR": ptBR,
   "pt-PT": ptPT,
-  "en-GB": enGB,
+  "en-US": enUS,
 }
 
 interface LanguageContextType {
@@ -39,7 +39,17 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     const saved = localStorage.getItem("mirror-lang") as Language | null
     if (saved && translations[saved]) {
       setLanguageState(saved)
+      return
     }
+    // Sem preferencia salva: idioma pelo pais. Brasil -> pt-BR; fora do
+    // Brasil -> pt-PT. Ingles (en-US) so por escolha manual no seletor.
+    const ctrl = new AbortController()
+    const timer = setTimeout(() => ctrl.abort(), 3000)
+    fetch("https://ipapi.co/json/", { signal: ctrl.signal })
+      .then((r) => r.json())
+      .then((d) => setLanguageState(d?.country === "BR" ? "pt-BR" : "pt-PT"))
+      .catch(() => {})
+      .finally(() => clearTimeout(timer))
   }, [])
 
   const setLanguage = useCallback((lang: Language) => {

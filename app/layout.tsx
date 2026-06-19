@@ -20,9 +20,33 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Mirror - O teu diário com inteligência artificial',
-  description: 'Reflete sobre os teus pensamentos e emoções com o Mirror. Recebe insights personalizados e cresce no autoconhecimento com IA. Feito em Portugal.',
-  manifest: '/mirror-landing-page/manifest.json',
+  metadataBase: new URL('https://usemirror.com.br'),
+  title: 'Mirror: diário de voz com IA | Entenda sua mente em 3 minutos',
+  description:
+    'Fale 3 minutos por dia e a IA te devolve clareza: seu Mirror Score, suas emoções e os padrões do seu bem-estar. Diário de voz com IA, privado e em português. Entre na lista de espera.',
+  keywords: [
+    'diário de voz', 'saúde mental', 'bem-estar', 'ansiedade', 'autoconhecimento',
+    'diário emocional', 'mindfulness', 'inteligência artificial', 'Mirror Score', 'journaling',
+  ],
+  applicationName: 'Mirror',
+  manifest: '/manifest.json',
+  alternates: { canonical: 'https://usemirror.com.br' },
+  robots: { index: true, follow: true },
+  openGraph: {
+    type: 'website',
+    locale: 'pt_BR',
+    url: 'https://usemirror.com.br',
+    siteName: 'Mirror',
+    title: 'Mirror: diário de voz com IA | Entenda sua mente em 3 minutos',
+    description:
+      'Fale 3 minutos por dia e a IA te devolve clareza: Mirror Score, emoções e padrões do seu bem-estar. Privado e em português. Entre na lista.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Mirror: diário de voz com IA',
+    description:
+      'Fale 3 minutos por dia e entenda como você está. Diário de voz com IA, privado e em português. Entre na lista.',
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
@@ -44,7 +68,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="pt-PT">
+    <html lang="pt-BR">
       <body className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans antialiased`}>
         <LanguageProvider>
           <GeoGate>
