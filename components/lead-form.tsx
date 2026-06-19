@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useCallback } from "react"
+import { useState, useCallback, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -19,11 +19,24 @@ export function LeadForm() {
   const [consentGiven, setConsentGiven] = useState(false)
   const [privacyModalOpen, setPrivacyModalOpen] = useState(false)
   const [errors, setErrors] = useState<{ email?: string; phone?: string }>({})
+  const [interestedCount, setInterestedCount] = useState<number | null>(null)
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
   })
+
+  // Real waitlist count. `leads` is insert-only for anon (no row access), so
+  // we read just the aggregate via the SECURITY DEFINER `lead_count` RPC.
+  // If the RPC is unavailable or errors, the badge stays hidden - we never
+  // show a placeholder number.
+  useEffect(() => {
+    supabase
+      .rpc("lead_count")
+      .then(({ data, error }) => {
+        if (!error && typeof data === "number") setInterestedCount(data)
+      })
+  }, [])
 
   const validateEmail = useCallback((email: string): string | undefined => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -241,10 +254,12 @@ export function LeadForm() {
             <Shield className="w-4 h-4 text-[#00D4FF]" />
             <span>{t("leadForm.badgeGdpr")}</span>
           </div>
-          <div className="flex items-center gap-2 text-xs text-muted-foreground">
-            <Users className="w-4 h-4 text-[#E91E8C]" />
-            <span>{t("leadForm.badgeInterested")}</span>
-          </div>
+          {interestedCount !== null && interestedCount > 0 && (
+            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+              <Users className="w-4 h-4 text-[#E91E8C]" />
+              <span>{interestedCount.toLocaleString()} {t("leadForm.badgeInterested")}</span>
+            </div>
+          )}
         </div>
       </div>
 
