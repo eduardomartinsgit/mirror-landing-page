@@ -1,0 +1,43 @@
+# .htaccess do Mirror (landing estatico) para Apache / cPanel (HostGator).
+# Fica em public/ e e copiado para out/ no build, indo parar no public_html.
+#
+# ATENCAO: o bloco de "forcar HTTPS" so deve ficar ativo DEPOIS que o
+# certificado SSL estiver emitido para o dominio. Antes do SSL, ele causa
+# loop/erro. Ative o SSL no cPanel primeiro.
+
+# ---- Forcar HTTPS ----
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# ---- Pagina 404 (gerada pelo Next export) ----
+ErrorDocument 404 /404.html
+
+# ---- Compressao ----
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css application/javascript application/json image/svg+xml
+</IfModule>
+
+# ---- Cache ----
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 month"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType image/jpeg "access plus 1 month"
+</IfModule>
+
+<IfModule mod_headers.c>
+  # Assets do Next sao hasheados (imutaveis): cache agressivo.
+  <FilesMatch "\.(js|css|woff2)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  # HTML sempre revalida, para o deploy novo aparecer na hora.
+  <FilesMatch "\.html$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+  Header set X-Content-Type-Options "nosniff"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
